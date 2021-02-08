@@ -1,0 +1,124 @@
+body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: larger;
+    margin: 0;
+    padding: 0;
+}
+
+.todo-lists {
+    display: flex;
+    justify-content: center;
+    margin-top: 11%;
+    text-align: right;
+}
+
+.list-item {
+    display: flex;
+    /* justify-content: space-evenly; */
+}
+
+.list-details {
+    display: flex;
+    margin-left: 11px;
+}
+
+#level {
+    margin-left: 11px;
+}
+
+.list-edify {
+    display: flex;
+    margin-left: 11px;
+    border: solid silver .8px;
+    justify-content: space-evenly;
+    /* border-width: 1 2px; */
+    width: 29px;
+    /* height: 8px;
+    font-size: 20px; */
+}
+
+#edit .edit-text {
+    visibility: hidden;
+    text-align: center;
+    padding: 20px 0px;
+    position: absolute;
+    z-index: 1;
+}
+
+#edit:hover .edit-text {
+    visibility: visible;
+    color: steelblue;
+}
+
+#delete #delete-text {
+    visibility: hidden;
+    text-align: center;
+    padding: 17px 0px;
+    position: absolute;
+    z-index: 1;
+}
+
+#delete:hover #delete-text {
+    visibility: visible;
+    color: steelblue;
+}
+
+#del-border {
+    border-left: 1.1px dashed #000000;
+}
+
+#delete {
+    /* border-left: sienna 2 solid; */
+    /* margin-left: 4px; */
+    /* border-left: 1.1px dashed #000000; */
+    /* font-size: smaller; */
+    /* margin-top: 4; */
+    /* vertical-align: middle; */
+    transition: all .2s ease-in-out;
+}
+#delete:hover {
+    transform: scale(.8);
+}
+
+#edit {
+    padding-left: 2px;
+    transition: all .2s ease-in-out;
+}
+
+#edit:hover {
+    transform: scale(.8);
+}
+
+.checkbox-div {
+    transition: all .2s ease-in-out;
+}
+
+.checkbox-div:hover {
+    transform: scale(1.1);
+    /* border-color: steelblue; */
+    border: 1.1px solid steelblue;
+}
+
+/* Todo User Input Styling */
+.todo-input {
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.get-input, .toggle-div {
+    /* visibility: hidden; */
+    display: flex;
+    /* align-items: center; */
+    margin: auto;
+    margin-top: 20px;
+    font-size: larger;
+}
+
+button {
+    color: steelblue;
+}
+
+
+
