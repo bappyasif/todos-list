@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Todo List, feeling lucky eh punk!!</title>
+</head>
+<body>
+    <div class="user-input">
+        <button class="get-input">Add To Your List</button>
+        <div class="todo-input">
+            <div class="input-div">
+                <input type="text" name="inp-elem" id="inpEl" placeholder="Please name your task">
+            </div>
+            <div class="button-div">
+                <button class="submit">Click To Add Item</button>
+            </div>
+        </div>
+    </div>
+    <div class="todo-lists">
+        <div class="list-item">
+            <div class="checkbox-div">
+                <input type="checkbox" name="todo" id="01">
+            </div>
+            <div class="list-details">
+                <!-- <div class="project"><span id="name">Project Name</span></div>
+                <div class="priorities"><span id="level">High</span></div> -->
+                <div class="task"><span id="t-name">Task Name</span></div>
+                <div class="project"><select id="p-name">
+                    <option value="default">Project Name</option>
+                </select></div>
+                <div class="priorities"><select id="level">
+                    <option value="default">Normal</option>
+                </select></div>
+                <div class="list-edify">
+                    <span id="edit">!<span class="edit-text">edit</span></span>
+                    <!-- <span id="edit-text">edit</span> -->
+                    <span id="del-border"></span>
+                    <span id="delete">X<span id="delete-text">delete</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+</body>
+</html>
+
+<!-- 
+        <div class="todo-lists">
+        <div class="list-item">
+            <div class="input-div">
+                <input type="text" name="todo-input" id="todo-input">
+            </div>
+            <div class="list-details">
+                <div class="project"><span id="name">Project Name</span></div>
+                <div class="priorities"><span id="level">High</span></div>
+                <div class="list-edify"><span id="edit">!</span><span id="del-border"></span><span id="delete">X</span></div>
+                 <div class="list-edify">
+                    <div id="edit">!</div>
+                    <div id="delete">X</div>
+                </div> 
+            </div>
+        </div>
+    </div>
+ -->

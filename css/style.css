@@ -10,6 +10,7 @@ body {
     justify-content: center;
     margin-top: 11%;
     text-align: right;
+    flex-direction: column;
 }
 
 .list-item {
@@ -22,9 +23,21 @@ body {
     margin-left: 11px;
 }
 
-#level {
+#level, #p-name {
     margin-left: 11px;
+    /* min-width: 146px; */
 }
+
+.task {
+    min-width: 110px;
+}
+
+#t-name {
+    text-align: center;
+}
+/* #t-name {
+    min-width: 110px;
+} */
 
 .list-edify {
     display: flex;

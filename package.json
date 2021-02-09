@@ -1,0 +1,22 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "an attempt for TodoList",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bappyasif/todos-list.git"
+  },
+  "author": "abappy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bappyasif/todos-list/issues"
+  },
+  "homepage": "https://github.com/bappyasif/todos-list#readme",
+  "dependencies": {
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0"
+  }
+}
