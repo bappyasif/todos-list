@@ -1,5 +1,5 @@
-let projNames = ["Default"];
-let priorities = ["Normal", "High"];
+let projNames = ["Default", "Add New"];
+let priorities = ["Normal", "High", "Add New"];
 function addItem(taskName) {
     // let listDiv = document.querySelector(".list-item");
     let listDiv = document.createElement("div");
@@ -69,6 +69,20 @@ function addItem(taskName) {
     listDetails.append(taskSpan, projectNameDiv, prioritiesDiv, itemEdify);
     listDiv.append(checkboxDivEl, listDetails, itemEdify);
     listDiv.classList.add("list-item");
+    return listDiv;
+}
+
+export {addItem, projNames, priorities}
+
+/**
+ // function editItem(taskSpan) {
+    // let prompt = prompt("change todolist task name");
+    // taskSpan.textContent = prompt;
+// }
+
+// function removeItem(taskDiv) {
+//     taskDiv.remove();
+// }
 
     // deleteSpan.addEventListener("click", removeItem(listDiv));
     // editSpan.addEventListener("click", editItem(taskSpan));
@@ -79,16 +93,4 @@ function addItem(taskName) {
     //     let prompt = prompt("change todolist task name");
     //     taskSpan.textContent = prompt;        
     // });
-    return listDiv;
-}
-
-// function editItem(taskSpan) {
-    // let prompt = prompt("change todolist task name");
-    // taskSpan.textContent = prompt;
-// }
-
-// function removeItem(taskDiv) {
-//     taskDiv.remove();
-// }
-
-export {addItem, projNames, priorities}
+ */

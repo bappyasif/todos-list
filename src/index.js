@@ -1,5 +1,5 @@
-// import {addItem, projNames, priorities} from "../js/todoLogics/addItem.js";
-import {addItem} from "../js/todoLogics/addItem.js";
+import {addItem, projNames, priorities} from "../js/todoLogics/addItem.js";
+// import {addItem} from "../js/todoLogics/addItem.js";
 
 console.log("from index.js");
 let showDiv = document.querySelector(".todo-input");
@@ -39,31 +39,104 @@ function getListings() {
     let listItem = addItem(inputValue);
     todoLists.append(listItem);
     console.log(listItem);
-    editDelete(listItem);
+    // editDelete(listItem);
     inputElem.value = "";
 }
 
-function editDelete(taskDiv) {
-    let edit = document.querySelector("#edit");
-    let del = document.querySelector("#delete");
-    // if(edit)edit.addEventListener("click", editItem);
-    // if(del)del.addEventListener("click", () => removeItem(taskDiv));
-    // edit.addEventListener("click", editItem);
-    edit.addEventListener("click", () => editItem);
-    del.addEventListener("click", () => removeItem(taskDiv));
-    // del.addEventListener("click", removeItem(taskDiv));
+function editDelete() {
+    let todoLists = document.querySelector(".todo-lists");
+    todoLists.addEventListener("click", evt => {
+        // console.log(evt.target);
+        if(evt.target.id === "edit") editItem(evt);
+        else if(evt.target.id === "delete") deleteItem(evt);
+        else if(evt.target.id === "p-name") addNewProjectName(evt);
+        // else if(evt.target.id === "level")
+    });
 }
+
+editDelete();
 
 function editItem(evt) {
-    let prompt = prompt("change todolist task name");
-    let taskSpan = document.querySelector("#"+evt.target.id);
-    taskSpan.textContent = prompt;
+    let nodeTraversed = evt.target.parentNode.parentNode;
+    let taskSpan = nodeTraversed.querySelector("#t-name");
+    let changeTodoTaskName = prompt("change todolist task name");
+    taskSpan.textContent = changeTodoTaskName;
 }
 
-function removeItem(taskDiv) {
-    console.log(taskDiv, taskDiv.parentNode)
-    taskDiv.parentNode.removeChild(taskDiv);
+function deleteItem(evt) {
+    console.log(evt.target.parentNode.parentNode);
+    evt.target.parentNode.parentNode.parentNode.removeChild(evt.target.parentNode.parentNode);
 }
+
+// adding new project Names
+function addNewProjectName(evt) {
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Project Name");
+        let optionDiv = document.createElement("option");
+
+        let selectDiv = evt.target.parentNode.querySelector("#p-name");
+        optionDiv.value = newOption;
+
+        selectDiv.append(optionDiv);
+        projNames.insert(1,newOption);
+    }
+}
+
+Array.prototype.insert = function(index, item) {
+    this.splice(index, 0, item);
+}
+// addNewProjectName();
+
+/**
+ * 
+ // adding new project Names
+function addNewProjectName(evt) {
+    let item = evt;
+    console.log(item);
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Project Name");
+        // projNames.push(newOption);
+        let optionDiv = document.createElement("option");
+        // evt.target.value = "newOption";
+        // console.log(evt.target.parentNode);
+        // console.log(evt.target.parentNode.querySelector("#p-name"));
+        let selectDiv = evt.target.parentNode.querySelector("#p-name");
+        optionDiv.value = newOption;
+        // optionDiv.parentNode.append(optionDiv);
+        selectDiv.append(optionDiv);
+        projNames.insert(1,newOption);
+    }
+    // if(evt.target.value === "Add New") console.log(evt.target.value);
+    // let todoItem = document.querySelector(".item-list");
+    // todoItem.addEventListener("click", evt => {
+    //     console.log(evt.target);
+    // });
+}
+ * 
+ * 
+// editDelete();
+
+// function editDelete(taskDiv) {
+//     let edit = document.querySelector("#edit");
+//     let del = document.querySelector("#delete");
+//     // if(edit)edit.addEventListener("click", editItem);
+//     // if(del)del.addEventListener("click", () => removeItem(taskDiv));
+//     // edit.addEventListener("click", editItem);
+//     edit.addEventListener("click", () => editItem);
+//     del.addEventListener("click", () => removeItem(taskDiv));
+//     // del.addEventListener("click", removeItem(taskDiv));
+// }
+
+// function editItem(evt) {
+//     let prompt = prompt("change todolist task name");
+//     let taskSpan = document.querySelector("#"+evt.target.id);
+//     taskSpan.textContent = prompt;
+// }
+
+// function removeItem(taskDiv) {
+//     console.log(taskDiv, taskDiv.parentNode)
+//     taskDiv.parentNode.removeChild(taskDiv);
+// }
 
 // function addItem(taskName) {
 //     let listsDiv = document.querySelector(".list-details");
@@ -72,4 +145,40 @@ function removeItem(taskDiv) {
 //     todoTask.classList.add("task");
 //     todoTask.textContent = taskName;
 //     listsDiv.append(todoTask);
-// }
+// } 
+
+
+ * 
+ * 
+ function editDelete() {
+    let todoLists = document.querySelector(".todo-lists");
+    todoLists.addEventListener("click", evt => {
+        // console.log(evt.target);
+        if(evt.target.id === "edit") editItem(evt);
+        else if(evt.target.id === "delete") deleteItem(evt);
+    });
+}
+
+editDelete();
+
+function editItem(evt) {
+    // console.log(evt.target, evt.target.parentNode.parentNode);
+    let nodeTraversed = evt.target.parentNode.parentNode;
+    let taskSpan = nodeTraversed.querySelector("#t-name");
+    let changeTodoTaskName = prompt("change todolist task name");
+    taskSpan.textContent = changeTodoTaskName;
+    // console.log(nodeTraversed, nodeTraversed.className);
+    // console.log(nodeTraversed.querySelector("#t-name").textContent);
+    // let taskSpan = nodeTraversed.querySelector("#t-name");
+    // let taskSpan = nodeTraversed.querySelector(".task");
+    // let prompt = prompt("change todolist task name");
+    // let taskSpan = document.querySelector("#"+evt.target.id);
+    // taskSpan.textContent = prompt;
+    // console.log(taskSpan);
+}
+
+function deleteItem(evt) {
+    console.log(evt.target.parentNode.parentNode);
+    evt.target.parentNode.parentNode.parentNode.removeChild(evt.target.parentNode.parentNode);
+}
+ */
