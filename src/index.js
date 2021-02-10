@@ -50,7 +50,7 @@ function editDelete() {
         if(evt.target.id === "edit") editItem(evt);
         else if(evt.target.id === "delete") deleteItem(evt);
         else if(evt.target.id === "p-name") addNewProjectName(evt);
-        // else if(evt.target.id === "level")
+        else if(evt.target.id === "level") addNewPrioritiyLevel(evt);
     });
 }
 
@@ -73,11 +73,25 @@ function addNewProjectName(evt) {
     if(evt.target.value === "Add New") {
         let newOption = prompt("Enter New Project Name");
         let optionDiv = document.createElement("option");
-
-        let selectDiv = evt.target.parentNode.querySelector("#p-name");
+        
+        let selectElem = evt.target.parentNode.querySelector("#p-name");
         optionDiv.value = newOption;
+        selectElem.add(new Option(newOption, optionDiv));
+        selectElem.value = selectElem.options[selectElem.options.length-1];
+        projNames.insert(1,newOption);
+    }
+}
 
-        selectDiv.append(optionDiv);
+// adding new Priorities Level
+function addNewPrioritiyLevel(evt) {
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Priority Name");
+        let optionDiv = document.createElement("option");
+        
+        let selectElem = evt.target.parentNode.querySelector("#level");
+        optionDiv.value = newOption;
+        selectElem.add(new Option(newOption, optionDiv));
+        selectElem.value = selectElem.options[selectElem.options.length-1];
         projNames.insert(1,newOption);
     }
 }
@@ -88,6 +102,61 @@ Array.prototype.insert = function(index, item) {
 // addNewProjectName();
 
 /**
+ * 
+ * 
+ function addNewProjectName(evt) {
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Project Name");
+        let optionDiv = document.createElement("option");
+
+        let selectElem = evt.target.parentNode.querySelector("#p-name");
+        optionDiv.value = newOption;
+
+        // selectElem.innerHTML += `<option>${newOption}</option>`;
+        // selectElem.options[selectElem.options.length] = new Option(newOption, optionDiv);
+        selectElem.add(new Option(newOption, optionDiv));
+        selectElem.value = selectElem.options[selectElem.options.length-1];
+        projNames.insert(1,newOption);
+    }
+}
+
+// adding new Priorities Level
+function addNewPrioritiyLevel(evt) {
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Priority Name");
+        let optionDiv = document.createElement("option");
+
+        let selectElem = evt.target.parentNode.querySelector("#level");
+        optionDiv.value = newOption;
+
+        // selectElem.innerHTML += `<option>${newOption}</option>`;
+        // selectElem.options[selectElem.options.length] = new Option(newOption, optionDiv);
+        selectElem.add(new Option(newOption, optionDiv));
+        // selectElem.value = newOption;
+        selectElem.value = selectElem.options[selectElem.options.length-1];
+        projNames.insert(1,newOption);
+    }
+}
+ * 
+ * 
+ function addNewProjectName(evt) {
+    if(evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Project Name");
+        let optionDiv = document.createElement("option");
+
+        let selectElem = evt.target.parentNode.querySelector("#p-name");
+        optionDiv.value = newOption;
+
+        // selectElem.append(optionDiv);
+        selectElem.innerHTML += `<option>${newOption}</option>`;
+        // console.log(evt.target, evt.target.parentNode);
+        // let selectDiv = evt.target.parentNode.querySelector("#p-name");
+        // console.log(selectDiv, selectElem);
+        // evt.target.parentNode.replaceChild(selectDiv, selectElem);
+        // selectDiv.replaceChild(evt.target, optionDiv);
+        projNames.insert(1,newOption);
+    }
+}
  * 
  // adding new project Names
 function addNewProjectName(evt) {
