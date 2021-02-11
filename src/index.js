@@ -97,6 +97,7 @@ function addNewPrioritiyLevel(evt) {
         selectElem.add(new Option(newOption, optionDiv));
         selectElem.value = selectElem.options[selectElem.options.length - 1];
         priorities.insert(1, newOption);
+        colorChange(newOption, selectElem);
     } else if (evt.target.value === "Normal") {
         evt.target.parentNode.parentNode.style.backgroundColor = "silver";
     } else if (evt.target.value === "High") {
@@ -114,9 +115,26 @@ Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 }
 
+// Color Coating for Priorities
+function colorChange(value, selectDiv) {
+    switch (value) {
+        case "low":
+            selectDiv.parentNode.parentNode.style.backgroundColor = "lightBlue";
+            break;
+        case "lower":
+            selectDiv.parentNode.parentNode.style.backgroundColor = "blue";
+            break;
+        case "lowest":
+            selectDiv.parentNode.parentNode.style.backgroundColor = "cyan";
+            break;
+        default:
+            selectDiv.parentNode.parentNode.style.backgroundColor = "";
+    }
+}
+
 /**
  *
- * 
+ *
  function addNewPrioritiyLevel(evt) {
     if (evt.target.value === "Add New") {
         let newOption = prompt("Enter New Priority Name");
@@ -146,8 +164,8 @@ Array.prototype.insert = function (index, item) {
         evt.target.parentNode.parentNode.style.backgroundColor = "";
     }
 }
- * 
- * 
+ *
+ *
  function immediateCoating(value, item) {
     // let value, item;
     // value = evt.target.value;
@@ -172,8 +190,8 @@ function colorCoatingForPriorities() {
     });
 }
 colorCoatingForPriorities();
- * 
- * 
+ *
+ *
  function addNewPrioritiyLevel(evt) {
     if (evt.target.value === "Add New") {
         let newOption = prompt("Enter New Priority Name");
@@ -284,7 +302,7 @@ function colorCoatingForPriorities() {
 //     }
 // }
 // colorCoatingForPriorities();
- * 
+ *
  *
  function addNewProjectName(evt) {
     if(evt.target.value === "Add New") {
