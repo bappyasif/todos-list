@@ -7,15 +7,20 @@ body {
 
 .todo-lists {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     margin-top: 11%;
-    text-align: right;
-    flex-direction: column;
+    /* text-align: right; */
+    /* flex-direction: column; */
+    /* margin: auto; */
+    flex-flow: column;
+    align-items: center;
 }
 
 .list-item {
     display: flex;
     /* justify-content: space-evenly; */
+    /* margin: auto; */
+    /* flex-direction: row; */
 }
 
 .list-details {
@@ -133,5 +138,13 @@ button {
     color: steelblue;
 }
 
+/* priorities color */
+.Higher {
+    background-color: yellow;
+}
+
+.Highest {
+    background-color: red;
+}
 
 

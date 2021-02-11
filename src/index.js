@@ -1,4 +1,4 @@
-import {addItem, projNames, priorities} from "../js/todoLogics/addItem.js";
+import { addItem, projNames, priorities } from "../js/todoLogics/addItem.js";
 // import {addItem} from "../js/todoLogics/addItem.js";
 
 console.log("from index.js");
@@ -13,7 +13,7 @@ function showInputter() {
 
     toggleDiv.textContent = "Done Adding!!";
     toggleDiv.classList.add("toggle-div");
-    
+
     readyInput.parentNode.replaceChild(toggleDiv, readyInput);
     toggleDiv.addEventListener("click", toggleInputter);
 
@@ -36,21 +36,25 @@ function getListings() {
     let inputElem = document.querySelector("#inpEl");
     let inputValue = inputElem.value;
     console.log(inputValue);
+    // todoLists.classList.add("todo-lists");
     let listItem = addItem(inputValue);
+    // listItem.classList.add(".list-item");
     todoLists.append(listItem);
     console.log(listItem);
     // editDelete(listItem);
     inputElem.value = "";
+    // colorCoatingForPriorities();
 }
 
 function editDelete() {
     let todoLists = document.querySelector(".todo-lists");
     todoLists.addEventListener("click", evt => {
         // console.log(evt.target);
-        if(evt.target.id === "edit") editItem(evt);
-        else if(evt.target.id === "delete") deleteItem(evt);
-        else if(evt.target.id === "p-name") addNewProjectName(evt);
-        else if(evt.target.id === "level") addNewPrioritiyLevel(evt);
+        if (evt.target.id === "edit") editItem(evt);
+        else if (evt.target.id === "delete") deleteItem(evt);
+        else if (evt.target.id === "p-name") addNewProjectName(evt);
+        else if (evt.target.id === "level") addNewPrioritiyLevel(evt);
+        // else if(evt.target.class = "priorities") immediateCoating(evt);
     });
 }
 
@@ -70,40 +74,218 @@ function deleteItem(evt) {
 
 // adding new project Names
 function addNewProjectName(evt) {
-    if(evt.target.value === "Add New") {
+    if (evt.target.value === "Add New") {
         let newOption = prompt("Enter New Project Name");
         let optionDiv = document.createElement("option");
-        
+
         let selectElem = evt.target.parentNode.querySelector("#p-name");
         optionDiv.value = newOption;
         selectElem.add(new Option(newOption, optionDiv));
-        selectElem.value = selectElem.options[selectElem.options.length-1];
-        projNames.insert(1,newOption);
+        selectElem.value = selectElem.options[selectElem.options.length - 1];
+        projNames.insert(1, newOption);
     }
 }
 
-// adding new Priorities Level
+// adding new Priorities Level & Colors
 function addNewPrioritiyLevel(evt) {
-    if(evt.target.value === "Add New") {
+    if (evt.target.value === "Add New") {
         let newOption = prompt("Enter New Priority Name");
         let optionDiv = document.createElement("option");
-        
+
         let selectElem = evt.target.parentNode.querySelector("#level");
         optionDiv.value = newOption;
         selectElem.add(new Option(newOption, optionDiv));
-        selectElem.value = selectElem.options[selectElem.options.length-1];
-        projNames.insert(1,newOption);
+        selectElem.value = selectElem.options[selectElem.options.length - 1];
+        priorities.insert(1, newOption);
+    } else if (evt.target.value === "Normal") {
+        evt.target.parentNode.parentNode.style.backgroundColor = "silver";
+    } else if (evt.target.value === "High") {
+        evt.target.parentNode.parentNode.style.backgroundColor = "orange";
+    } else if (evt.target.value === "Higher") {
+        evt.target.parentNode.parentNode.style.backgroundColor = "yellow";
+    } else if (evt.target.value === "Highest") {
+        evt.target.parentNode.parentNode.style.backgroundColor = "red";
+    } else if (evt.target.value === "Choose") {
+        evt.target.parentNode.parentNode.style.backgroundColor = "";
     }
 }
 
-Array.prototype.insert = function(index, item) {
+Array.prototype.insert = function (index, item) {
     this.splice(index, 0, item);
 }
-// addNewProjectName();
 
 /**
+ *
+ * 
+ function addNewPrioritiyLevel(evt) {
+    if (evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Priority Name");
+        let optionDiv = document.createElement("option");
+
+        let selectElem = evt.target.parentNode.querySelector("#level");
+        optionDiv.value = newOption;
+        selectElem.add(new Option(newOption, optionDiv));
+        selectElem.value = selectElem.options[selectElem.options.length - 1];
+        priorities.insert(1, newOption);
+        // evt.target.parentNode.parentNode.classList.add(newOption);
+    } else if (evt.target.value === "Normal") {
+        // console.log("normal", evt.target.parentNode.parentNode);
+        evt.target.parentNode.parentNode.style.backgroundColor = "silver";
+    } else if (evt.target.value === "High") {
+        // console.log("High", evt.target.parentNode.parentNode);
+        evt.target.parentNode.parentNode.style.backgroundColor = "orange";
+    } else if (evt.target.value === "Higher") {
+        // console.log("Higher", evt.target.parentNode.parentNode);
+        evt.target.parentNode.parentNode.style.backgroundColor = "yellow";
+    } else if (evt.target.value === "Highest") {
+        // console.log("normal", evt.target.parentNode.parentNode);
+        evt.target.parentNode.parentNode.style.backgroundColor = "red";
+    } else if (evt.target.value === "Choose") {
+        // console.log("normal", evt.target.parentNode.parentNode);
+        // console.log("choose");
+        evt.target.parentNode.parentNode.style.backgroundColor = "";
+    }
+}
  * 
  * 
+ function immediateCoating(value, item) {
+    // let value, item;
+    // value = evt.target.value;
+    // item = evt.target.parentNode.parentNode;
+    console.log(value, item);
+    if (value === "Normal") {
+        item.style.backgroundColor = "silver";
+    } else if (value === "High") {
+        item.style.backgroundColor = "orange";
+    } else if (value === "Higher") {
+        item.style.backgroundColor = "yellow";
+    } else if (value === "Highest") {
+        item.style.backgroundColor = "red";
+    }
+}
+function colorCoatingForPriorities() {
+    let taskItem = document.querySelectorAll(".list-item");
+    // taskItem.querySelector("#level").addEventListener("click", evt => immediateCoating(evt));
+    Array.from(taskItem).forEach(item => {
+        let prLevel = item.querySelector("#level");
+        immediateCoating(prLevel.value, item.querySelector(".list-details"));
+    });
+}
+colorCoatingForPriorities();
+ * 
+ * 
+ function addNewPrioritiyLevel(evt) {
+    if (evt.target.value === "Add New") {
+        let newOption = prompt("Enter New Priority Name");
+        let optionDiv = document.createElement("option");
+
+        let selectElem = evt.target.parentNode.querySelector("#level");
+        optionDiv.value = newOption;
+        selectElem.add(new Option(newOption, optionDiv));
+        selectElem.value = selectElem.options[selectElem.options.length - 1];
+        // colorCoatingForPriorities(selectElem.value, evt.target.parentNode.parentNode);
+        priorities.insert(1, newOption);
+        // colorCoatingForPriorities(selectElem.value, evt.target.parentNode.parentNode);
+        // colorCoatingForPriorities(priorities[1], evt.target.parentNode.parentNode);
+        // colorCoatingForPriorities(priorities[priorities.length-1], evt.target.parentNode.parentNode);
+    } else {
+        // colorCoatingForPriorities(evt.target.value, evt.target.parentNode.parentNode);
+    }
+    // colorCoatingForPriorities(evt.target.value, evt.target.parentNode.parentNode);
+    // if (evt.target.value === "Higher") {
+    //     // console.log("higher");
+    //     immediateCoating(evt.target.value, evt.target.parentNode.parentNode);
+    // }
+}
+
+Array.prototype.insert = function (index, item) {
+    this.splice(index, 0, item);
+}
+
+// color coating for priorities
+function immediateCoating(value, item) {
+    console.log(value, item);
+    if (value === "Normal") {
+        item.style.backgroundColor = "silver";
+    } else if (value === "High") {
+        item.style.backgroundColor = "orange";
+    } else if (value === "Higher") {
+        item.style.backgroundColor = "yellow";
+    } else if (value === "Highest") {
+        item.style.backgroundColor = "red";
+    }
+}
+function colorCoatingForPriorities() {
+    let taskItem = document.querySelectorAll(".list-item");
+    Array.from(taskItem).forEach(item => {
+        let priorityLevel = item.querySelector("#level");
+        if (priorityLevel.value === "Normal") {
+            item.style.backgroundColor = "silver";
+        } else if (priorityLevel.value === "High") {
+            item.style.backgroundColor = "orange";
+        } else if (priorityLevel.value === "Higher") {
+            item.style.backgroundColor = "yellow";
+        } else if (priorityLevel.value === "Highest") {
+            item.style.backgroundColor = "red";
+        }
+    });
+}
+// colorCoatingForPriorities();
+
+
+// function colorCoatingForPriorities(prLevel, item) {
+//     console.log(prLevel,prLevel.value, item);
+//     if(prLevel === "Normal") {
+//         item.style.backgroundColor = "silver";
+//     } else if(prLevel === "High") {
+//         item.style.backgroundColor = "orange";
+//     } else if(prLevel === "Higher") {
+//         item.style.backgroundColor = "yellow";
+//     } else if(prLevel === "Highest") {
+//         item.style.backgroundColor = "red";
+//     }
+    // let taskItem =  document.querySelectorAll(".list-item");
+    // Array.from(taskItem).forEach(item => {
+    //     let priorityLevel = item.querySelector("#level");
+    //     if(priorityLevel.value === "Normal") {
+    //         item.style.backgroundColor = "green";
+    //     } else if(priorityLevel.value === "High") {
+    //         item.style.backgroundColor = "yellow";
+    //     } else if(priorityLevel.value === "Higher") {
+    //         item.style.backgroundColor = "light red";
+    //     } else if(priorityLevel.value === "Highest") {
+    //         item.style.backgroundColor = "red";
+    //     }
+    // });
+// }
+// function colorCoatingForPriorities() {
+//     let taskItem =  document.querySelectorAll(".list-item");
+//     Array.from(taskItem).forEach(item => {
+//         let priorityLevel = item.querySelector("#level");
+//         if(priorityLevel.value === "Normal") {
+//             item.style.backgroundColor = "green";
+//         } else if(priorityLevel.value === "High") {
+//             item.style.backgroundColor = "yellow";
+//         } else if(priorityLevel.value === "Higher") {
+//             item.style.backgroundColor = "light red";
+//         } else if(priorityLevel.value === "Highest") {
+//             item.style.backgroundColor = "red";
+//         }
+//     });
+// }
+// function colorCoatingForPriorities() {
+//     let taskItem =  document.querySelector(".list-item");
+//     if(taskItem) {
+//         let priorityLevel = taskItem.querySelector("#level");
+//         console.log("<>",taskItem, priorityLevel.value);
+//         if(priorityLevel.value === "Normal") {
+//             taskItem.style.backgroundColor = "green";
+//         }
+//     }
+// }
+// colorCoatingForPriorities();
+ * 
+ *
  function addNewProjectName(evt) {
     if(evt.target.value === "Add New") {
         let newOption = prompt("Enter New Project Name");
@@ -137,8 +319,8 @@ function addNewPrioritiyLevel(evt) {
         projNames.insert(1,newOption);
     }
 }
- * 
- * 
+ *
+ *
  function addNewProjectName(evt) {
     if(evt.target.value === "Add New") {
         let newOption = prompt("Enter New Project Name");
@@ -157,7 +339,7 @@ function addNewPrioritiyLevel(evt) {
         projNames.insert(1,newOption);
     }
 }
- * 
+ *
  // adding new project Names
 function addNewProjectName(evt) {
     let item = evt;
@@ -181,8 +363,8 @@ function addNewProjectName(evt) {
     //     console.log(evt.target);
     // });
 }
- * 
- * 
+ *
+ *
 // editDelete();
 
 // function editDelete(taskDiv) {
@@ -214,11 +396,11 @@ function addNewProjectName(evt) {
 //     todoTask.classList.add("task");
 //     todoTask.textContent = taskName;
 //     listsDiv.append(todoTask);
-// } 
+// }
 
 
- * 
- * 
+ *
+ *
  function editDelete() {
     let todoLists = document.querySelector(".todo-lists");
     todoLists.addEventListener("click", evt => {

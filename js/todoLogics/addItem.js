@@ -1,5 +1,5 @@
 let projNames = ["Default", "Add New"];
-let priorities = ["Normal", "High", "Add New"];
+let priorities = ["Choose","Normal", "High", "Higher", "Highest", "Add New"];
 function addItem(taskName) {
     // let listDiv = document.querySelector(".list-item");
     let listDiv = document.createElement("div");
