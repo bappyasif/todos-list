@@ -1,4 +1,4 @@
-import { addItem, tasks } from "../addingItems/addItem.js";
+import { addItem, todos } from "../addingItems/addItem.js";
 function getListings() {
     let todoLists = document.querySelector(".todo-lists");
     let inputElem = document.querySelector("#inpEl");
@@ -6,19 +6,41 @@ function getListings() {
     addItem(inputValue);
     displayTasks(todoLists);
     inputElem.value = "";
-    // todoLists.childNodes.forEach(item => item.innerHTML = "");
-    // console.log(tasks.length);
+    console.log(todos.length);
 }
 
 function displayTasks(listDiv) {
-    tasks.forEach(item => {
-        console.log("<{}>",item);
+    // Array.from(listDiv.childNodes).forEach(item=>item.innerHTML="");
+    todos.forEach(item => {
+        // console.log("<{}>",item);
         listDiv.append(item);
     });
 }
 
+function repaintTasks(listDiv, tasks) {
+    // Array.from(listDiv).forEach(item => item.textContent = "");
+    console.log("??", listDiv, tasks);
+    tasks.forEach(item => listDiv.append(item));
+    // tasks.forEach(item => console.log("##",item));
+}
 
-export { getListings }
+export { getListings, displayTasks, repaintTasks }
+
+/**
+ * 
+ // function displayTasks(listDiv) {
+//     todos.forEach(item => {
+//         console.log("<{}>",item);
+//         // for(let key in item) console.log(key, item[key]);
+//         for(let key in item) {
+//             // listDiv.append(item[key]);
+//             if(key !== "listCount" && key !== "id") listDiv.append(item[key]);
+//         }
+//         // listDiv.append(item);
+//     });
+// }
+
+
 
 // function displayTasks(listDiv, todoItem) {
 //     tasks.forEach(item => {
@@ -31,8 +53,8 @@ export { getListings }
 //         // listDiv.append(item.addItem(inputValue));
 //     });
 // }
-
-/**
+ * 
+ * 
  function getListings() {
     let todoLists = document.querySelector(".todo-lists");
     let inputElem = document.querySelector("#inpEl");
