@@ -10,8 +10,8 @@ function addItem(taskName) {
     // todo list item contents
     let checkboxElement = readyCheckBox();
     let todoTaskNameDiv = readyTodoTaskName(taskName);
-    let taskProjectNameSelection = readyExistingProjectNames();
-    let taskPriorityLevelSelection = readyExistingPriorityLevels();
+    let taskProjectNameSelection = readyExistingProjectNames(projNames);
+    let taskPriorityLevelSelection = readyExistingPriorityLevels(priorities);
     
     // part of todo list
     let itemEdify = document.createElement("div");
@@ -112,7 +112,7 @@ function readyDeleteSpan() {
     return deleteSpan;
 }
 
-export {addItem, todos}
+export {addItem, todos, projNames, priorities}
 
 
 /**
