@@ -1,5 +1,5 @@
 import {addNewProjectName} from "../addingProjects/projectOption.js";
-// import {addNewPrioritiyLevel} from "../addingPriorities/priorityLevel.js";
+import {addNewPrioritiyLevel} from "../addingPriorities/priorityLevel.js";
 import {todos} from "../addingItems/addItem.js";
 import {repaintTasks} from "../addingItems/generateListings.js";
 // import {getListings, displayTasks, repaintTasks} from "../addingItems/generateListings.js";
@@ -11,7 +11,7 @@ function editDelete() {
         if (evt.target.id === "edit") editItem(evt);
         else if (evt.target.id === "delete") deleteItem(evt);
         else if (evt.target.id === "p-name") addNewProjectName(evt);
-        // else if (evt.target.id === "level") addNewPrioritiyLevel(evt);
+        else if (evt.target.id === "level") addNewPrioritiyLevel(evt);
     });
 }
 

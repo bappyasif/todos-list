@@ -1,4 +1,6 @@
-import {priorities} from "../addingItems/addItem.js";
+import {todos, priorities} from "../addingItems/addItem.js";
+import {repaintTasks} from "../addingItems/generateListings.js";
+import {removeAllChildNodes} from "../editingItems/todoListEditing.js";
 import {colorChange} from "../colorCoating/priorityColors.js";
 // import {getListings} from "../addingItems/generateListings.js";
 
@@ -10,17 +12,32 @@ function addNewPrioritiyLevel(evt) {
         let optionDiv = document.createElement("option");
 
         // targeting select tag for priority level and it as an option to choose from
-        let selectElem = evt.target.parentNode.querySelector("#level");
+        // let selectElem = evt.target.parentNode.querySelector("#level");
+        // optionDiv.value = newOption;
+        let dataAttr = evt.target.parentNode.parentNode.getAttribute("data-item");
+        let selectElem = todos[dataAttr].querySelector("#level");
         optionDiv.value = newOption;
         
-        selectElem.add(new Option(newOption, optionDiv));
-        selectElem.value = selectElem.options[selectElem.options.length - 1];
+        // selectElem.add(new Option(newOption, optionDiv));
+        // selectElem.value = selectElem.options[selectElem.options.length - 1];
+        selectElem.add(new Option(newOption, optionDiv.value, false, true), null);
         
-        selectElem.options[selectElem.selectedIndex];
+        // selectElem.options[selectElem.selectedIndex];
+
 
         // adding into priorities array and changing color as intended 
         priorities.insert(1, newOption);
         colorChange(newOption, selectElem);
+
+        let listsNode = evt.target.parentNode.parentNode.parentNode;
+        removeAllChildNodes(listsNode);
+        repaintTasks(listsNode, todos);
+        
+        let replacingSelect = replaceSelect();
+        selectElem.parentNode.replaceChild(replacingSelect, selectElem);
+        let selectedIndex = 1;
+        selectElem.value =  selectedIndex;
+        // selectElem.value =  newOption;
         // getListings();
     } 
     // checking and changing existing priority level color coding
@@ -49,6 +66,19 @@ function addNewPrioritiyLevel(evt) {
             }
         });
     }
+}
+
+function replaceSelect() {
+    let select = document.createElement("select");
+    for(let i=0;i<priorities.length; i++) {
+        let option = document.createElement("option");
+        option.textContent = priorities[i];
+        option.value = priorities[i];
+        select.append(option);
+    }
+    console.log(select);
+    select.id = "level";
+    return select;
 }
 
 export {addNewPrioritiyLevel}
