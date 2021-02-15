@@ -1,10 +1,14 @@
 import { addItem, todos } from "../addingItems/addItem.js";
+import { removeAllChildNodes } from "../editingItems/todoListEditing.js";
 function getListings() {
     let todoLists = document.querySelector(".todo-lists");
     let inputElem = document.querySelector("#inpEl");
     let inputValue = inputElem.value;
+    removeAllChildNodes(todoLists, todos);
     addItem(inputValue);
-    displayTasks(todoLists);
+    // displayTasks(todoLists);
+    // removeAllChildNodes(todoLists, todos);
+    repaintTasks(todoLists, todos);
     inputElem.value = "";
     console.log(todos.length);
 }

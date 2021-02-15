@@ -23,19 +23,20 @@ function addNewProjectName(evt) {
         removeAllChildNodes(listsNode);
         repaintTasks(listsNode, todos);
         
-        let replacingSelect = replaceSelect();
+        let replacingSelect = replaceSelect(newOption);
         selectElem.parentNode.replaceChild(replacingSelect, selectElem);
         
     }
 }
 
-function replaceSelect() {
+function replaceSelect(selected) {
     let select = document.createElement("select");
     for(let i=0;i<projNames.length; i++) {
         let option = document.createElement("option");
         option.textContent = projNames[i];
         option.value = projNames[i];
         select.append(option);
+        if(option.value === selected) option.selected =  true;
     }
     console.log(select);
     select.id = "p-name";

@@ -8,7 +8,7 @@ function colorChange(value, selectDiv) {
             selectDiv.parentNode.parentNode.style.backgroundColor = "blue";
             break;
         case "lowest":
-            selectDiv.parentNode.parentNode.style.backgroundColor = "cyan";
+            selectDiv.parentNode.parentNode.style.backgroundColor = "darkBlue";
             break;
         default:
             selectDiv.parentNode.parentNode.style.backgroundColor = "";
