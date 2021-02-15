@@ -5,8 +5,11 @@
 // import {showInputter, readyInput} from "../js/modularizedWithArrayStructure/userInput/getInput.js";
 // import {editDelete} from "../js/modularizedWithArrayStructure/editingItems/todoListEditing.js";
 
-import {showInputter, readyInput} from "../js/modularizedWithFactoryFunction/userInput/getInput.js";
-import {editDelete} from "../js/modularizedWithFactoryFunction/editingItems/todoListEditing.js";
+// import {showInputter, readyInput} from "../js/modularizedWithFactoryFunction/userInput/getInput.js";
+// import {editDelete} from "../js/modularizedWithFactoryFunction/editingItems/todoListEditing.js";
+
+import {showInputter, readyInput} from "../js/refactoringFactoryFunctionImplementation/userInput/getInput.js";
+import {editDelete} from "../js/refactoringFactoryFunctionImplementation/editingTasks/todoItemsEditing.js";
 
 readyInput.addEventListener("click", showInputter);
 editDelete();
