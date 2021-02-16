@@ -4,9 +4,11 @@ function getListings() {
     let todoLists = document.querySelector(".todo-lists");
     let inputElem = document.querySelector("#inpEl");
     let inputValue = inputElem.value;
+    // console.log("before:", todos);
     // removeAllChildNodes(todoLists, todos);
     addItem(inputValue);
     removeAllChildNodes(todoLists, todos);
+    // console.log("after:", todos);
     repaintTasks(todoLists, todos);
     inputElem.value = "";
     console.log(todos.length);

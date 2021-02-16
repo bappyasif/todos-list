@@ -1,7 +1,7 @@
-import {addNewProjectName} from "../addingProjects/projectOption.js";
-import {addNewPrioritiyLevel} from "../addingPriorities/priorityLevels.js";
-import {todos} from "../addingTasks/addTask.js";
-import {repaintTasks} from "../addingTasks/showTasks.js";
+import { addNewProjectName } from "../addingProjects/projectOption.js";
+import { addNewPrioritiyLevel } from "../addingPriorities/priorityLevels.js";
+import { todos } from "../addingTasks/addTask.js";
+import { repaintTasks } from "../addingTasks/showTasks.js";
 
 function editDelete() {
     let todoLists = document.querySelector(".todo-lists");
@@ -15,6 +15,8 @@ function editDelete() {
         removeAllChildNodes(todoLists);
         repaintTasks(todoLists, todos);
     });
+    // removeAllChildNodes(todoLists);
+    // repaintTasks(todoLists, todos);
 }
 
 function editItem(evt) {
@@ -24,18 +26,15 @@ function editItem(evt) {
 
 function editTodoTaskName(evt, tnUpdated) {
     let dataId = evt.target.parentNode.parentNode.id;
-    let todoLists = evt.target.parentNode.parentNode.parentNode;
-    console.log("<>",todos, dataId, todoLists, todos[dataId]);
-    // todos[dataId].querySelector("#t-name").textContent = tnUpdated;
     todos.forEach(item => {
-        if(item.id === dataId) {
+        if (item.id === dataId) {
             item.querySelector("#t-name").textContent = tnUpdated;
         }
     });
 }
 
 function removeAllChildNodes(container) {
-    while(container.firstChild) container.removeChild(container.firstChild);
+    while (container.firstChild) container.removeChild(container.firstChild);
 }
 
 function deleteItem(evt) {
@@ -44,7 +43,7 @@ function deleteItem(evt) {
 
 function removeTask(evt) {
     let dataAttr = evt.target.parentNode.parentNode.id;
-    console.log("taskItem:",dataAttr);
+    console.log("taskItem:", dataAttr);
     todos = filteredTask(dataAttr);
     // console.log(todos);
 }
@@ -54,11 +53,11 @@ function filteredTask(todoId) {
 }
 
 // export {editDelete}
-export {editDelete, removeAllChildNodes}
+export { editDelete, removeAllChildNodes }
 
 /**
- * 
- * 
+ *
+ *
  function editTodoTaskName(evt) {
     let dataAttr = evt.target.parentNode.parentNode.getAttribute("data-item");
     let listCN = evt.target.parentNode.parentNode.className;
@@ -86,34 +85,34 @@ function removeTodoTaskItem(evt) {
     let listsNode = evt.target.parentNode.parentNode.parentNode;
     // let dataAttr = evt.target.parentNode.parentNode.getAttribute("data-item");
     let dataAttr = evt.target.parentNode.getAttribute("data-item");
-    
+
     // todos = todos.splice(dataAttr, 1);
     // console.log("container", Array.from(itemNode.parentNode).length, todos, itemNode);
     todos.splice(dataAttr, 1);
     console.log("array",todos, dataAttr);
-    
+
     // removeAllChildNodes(itemNode.parentNode);
     // repaintTasks(itemNode.parentNode, todos);
     removeAllChildNodes(listsNode);
     repaintTasks(listsNode, todos);
 }
- * 
+ *
  function removeTodoTaskItem(evt) {
     let itemNode = evt.target.parentNode.parentNode;
     let dataAttr = evt.target.parentNode.parentNode.getAttribute("data-item");
     // console.log(todos);
     todos.splice(dataAttr, 1);
     // console.log(todos, itemNode.parentNode);
-    
+
     // getListings();
     // Array.from(itemNode.parentNode.childNodes).forEach(item=>item.innerHTML = "");
     // displayTasks(itemNode.parentNode);
     console.log("container", Array.from(itemNode.parentNode).length, todos);
     removeAllChildNodes(itemNode.parentNode);
     repaintTasks(itemNode.parentNode, todos);
-} 
+}
  *
- * 
+ *
  function editTodoTaskName(evt) {
     let dataAttr = evt.target.parentNode.parentNode.getAttribute("data-item");
     todos[dataAttr].querySelector("#t-name").textContent = "Updated task";
@@ -125,7 +124,7 @@ function removeTodoTaskItem(evt) {
     //     // if(idx === 1) item.textContent = "Updated Task"
     //     console.llog(item, idx);
     // });
-    // console.log(todos[dataAttr], 
+    // console.log(todos[dataAttr],
     //     todos[dataAttr].querySelector("#t-name"));
     // todos[dataAttr].querySelector("#t-name").textContent = "Updated task";
 

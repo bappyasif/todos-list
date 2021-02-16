@@ -1,7 +1,7 @@
 // import {projNames} from "../addingItems/addItem.js";
 import {todos, projNames} from "../addingTasks/addTask.js";
-import {repaintTasks} from "../addingTasks/showTasks.js";
-import {removeAllChildNodes} from "../editingTasks/todoItemsEditing.js";
+// import {repaintTasks} from "../addingTasks/showTasks.js";
+// import {removeAllChildNodes} from "../editingTasks/todoItemsEditing.js";
 // adding new project name into existing selection element when clicked "Add New"
 function addNewProjectName(evt) {
     // when clicked on "Add New"
@@ -12,21 +12,26 @@ function addNewProjectName(evt) {
         // targeting selection tag for Project Names and adding newly added option into that list and selecting it
         let dataId = evt.target.parentNode.parentNode.id;
         let selectElem;
+        optionDiv.value = newOption;
         
         todos.forEach(item => {
             if(item.id === dataId) {
                 selectElem = item.querySelector("#p-name");
+            } else {
+                item.querySelector("#p-name")
+                .add(new Option(newOption, optionDiv.value), 2);
+                // .add(new Option(newOption, optionDiv.value), null);
             }
         });
 
-        optionDiv.value = newOption;
+        // optionDiv.value = newOption;
         selectElem.add(new Option(newOption, optionDiv.value, false, true), null);
 
         // including into projNames array from addItem file
         projNames.insert(1, newOption);
-        let listsNode = evt.target.parentNode.parentNode.parentNode;
-        removeAllChildNodes(listsNode);
-        repaintTasks(listsNode, todos);
+        // let listsNode = evt.target.parentNode.parentNode.parentNode;
+        // removeAllChildNodes(listsNode);
+        // repaintTasks(listsNode, todos);
         
         let replacingSelect = replaceSelect(newOption);
         selectElem.parentNode.replaceChild(replacingSelect, selectElem);
