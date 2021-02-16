@@ -21,6 +21,14 @@ function addNewPrioritiyLevel(evt) {
         priorities.insert(1, newOption);
         colorChange(newOption, selectElem);
 
+        // adding newly added option to all previously existed tasks priority level option at position 2
+        todos.forEach(item => {
+            if(item.id !== dataId) {
+                item.querySelector("#level")
+                .add(new Option(optionDiv.value, newOption), 2);
+            }
+        });
+
         let replacingSelect = replaceSelect(newOption);
         selectElem.parentNode.replaceChild(replacingSelect, selectElem);
     }
