@@ -5,21 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/ui.css">
     <title>Todo List</title>
 </head>
 
 <body>
     <div class="todos-container">
+        <div class="task-entry">
+            <div class="todo-entry">
+                <input type="text" id="create-task" placeholder="Add your task here....">
+                <div class="task-icons">
+                    <div class="icons-div">
+                        <img src="../icons/calendar.svg" alt="" class="todo-icons">
+                        <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons">
+                        <img src="../icons/flag.svg" alt="" class="todo-icons">
+                        <img src="../icons/notes.svg" alt="" class="todo-icons">
+                    </div>
+                    <div class="task-buttons">
+                        <button class="todo-task">Add Task</button>
+                        <button class="cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="top-bar">
             <div class="app-icon">
-                <img src="" alt="">
+                <img src="../icons/home-01.svg" alt="app icon">
             </div>
             <div class="search-box">
-                <img src="" alt="">
+                <img src="../icons/contact-02.svg" alt="search icon">
                 <input type="text" name="search-tasks" id="search-tasks">
             </div>
             <div class="add-task">
-                <img src="" alt="">
+                <img src="../icons/contact-02.svg" alt="add to Todos icon">
+                <div class="tooltip-a2t">Add Task</div>
             </div>
         </div>
 
@@ -27,39 +46,40 @@
             <div class="side-panel">
                 <div class="today">
                     <div class="first-icon">
-                        <img src="" alt="">
+                        <img src="../icons/we-02.svg" alt="today panel first icon" class="icons">
                     </div>
-                    <div class="today-text"></div>
+                    <div class="today-text">Today</div>
                     <div class="ending-icon">
-                        <img src="" alt="">
+                        <img src="../icons/we-02.svg" alt="today panel second icon" class="icons">
                     </div>
                 </div>
                 <div class="next-week">
                     <div class="first-icon">
-                        <img src="" alt="">
+                        <img src="../icons/we-01.svg" alt="next week first icon" class="icons">
                     </div>
-                    <div class="nw-text"></div>
+                    <div class="nw-text">Next Week</div>
                     <div class="ending-icon">
-                        <img src="" alt="">
+                        <img src="../icons//we-01.svg" alt="next week second icon" class="icons">
                     </div>
                 </div>
                 <div class="tomorrow">
                     <div class="first-icon">
-                        <img src="" alt="">
+                        <img src="../icons/home-02.svg" alt="tomorrow panel first icon" class="icons">
                     </div>
-                    <div class="tomorrow-text"></div>
+                    <div class="tomorrow-text">Tomorrow</div>
                     <div class="ending-icon">
-                        <img src="" alt="">
+                        <img src="../icons/home-02.svg" alt="tomorrow panel second icon" class="icons">
                     </div>
                 </div>
+
                 <div class="projects">
                     <div class="li-div">
                         <div class="first-icon">
-                            <img src="" alt="">
+                            <img src="../icons/menu-02.svg" alt="project panel first icon" class="icons">
                         </div>
-                        <div class="li-text"></div>
+                        <div class="li-text">All Projects</div>
                         <div class="ending-icon">
-                            <img src="" alt="">
+                            <img src="../icons/menu-02.svg" alt="project panel second icon" class="icons">
                         </div>
                     </div>
                 </div>
@@ -67,22 +87,30 @@
 
             <div class="tasks-panel">
                 <div class="task-header">
-                    <div class="panel-text"></div>
-                    <div class="date-stamp"></div>
+                    <div class="panel-text">Today</div>
+                    <div class="ending-icon">
+                        <img src="../icons/menu-02.svg" alt="project panel second icon" class="icons">
+                    </div>
+                    <sub class="date-stamp">00.00.0000</sub>
                 </div>
                 <div class="tasks-container">
                     <div class="task-info">
                         <div class="checklist-div">
                             <input type="checkbox" name="task-check" id="task-check">
+                            <label for="task-check"></label>
                         </div>
                         <div class="task-name">
                             <div class="task-text">Task here</div>
                         </div>
                         <div class="due-date">
-                            <div class="time-stamp" id="task-dd"></div>
+                            <sub class="time-stamp" id="task-dd">00.00.0000</sub>
                         </div>
+                        <div class="task-added"></div>
                         <div class="task-project">
-                            <img src="" alt="" id="task-priority">
+                            <!-- <img src="../icons/we-01.svg" alt="" id="task-priority"> -->
+                            <div class="priority-level">
+                                <div class="priority-tooltip">Priority Level</div>
+                            </div>
                             <div class="project-name">Project Name</div>
                         </div>
                     </div>
