@@ -15,11 +15,13 @@
             <div class="todo-entry">
                 <input type="text" id="create-task" placeholder="Add your task here....">
                 <div class="task-icons">
+                    <input type="datetime-local" id="date-picker" placeholder="">
                     <div class="icons-div">
-                        <img src="../icons/calendar.svg" alt="" class="todo-icons">
-                        <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons">
-                        <img src="../icons/flag.svg" alt="" class="todo-icons">
-                        <img src="../icons/notes.svg" alt="" class="todo-icons">
+                        <!-- <input type="datetime-local" id="date-picker"> -->
+                        <img src="../icons/calendar.svg" alt="" class="todo-icons" id="calendar">
+                        <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons" id="due-date">
+                        <img src="../icons/flag.svg" alt="" class="todo-icons" id="priority">
+                        <img src="../icons/notes.svg" alt="" class="todo-icons" id="notes">
                     </div>
                     <div class="task-buttons">
                         <button class="todo-task">Add Task</button>
@@ -37,7 +39,7 @@
                 <input type="text" name="search-tasks" id="search-tasks">
             </div>
             <div class="add-task">
-                <img src="../icons/contact-02.svg" alt="add to Todos icon">
+                <img src="../icons/addIcon.svg" alt="add to Todos icon" id="show-panel">
                 <div class="tooltip-a2t">Add Task</div>
             </div>
         </div>
@@ -72,14 +74,33 @@
                     </div>
                 </div>
 
-                <div class="projects">
-                    <div class="li-div">
+                <div class="projects-div">
+                    <!-- <div class="li-div">
                         <div class="first-icon">
                             <img src="../icons/menu-02.svg" alt="project panel first icon" class="icons">
                         </div>
                         <div class="li-text">All Projects</div>
                         <div class="ending-icon">
                             <img src="../icons/menu-02.svg" alt="project panel second icon" class="icons">
+                        </div>
+                    </div> -->
+                    <div class="project-header">
+                        <div class="about-projects">
+                            <div class="first-icon">
+                                <img src="../icons/menu-02.svg" alt="project panel first icon" class="icons">
+                            </div>
+                            <div class="li-text">All Projects</div>
+                            <div class="ending-icon">
+                                <img src="../icons/menu-02.svg" alt="project panel second icon" class="icons">
+                            </div>
+                        </div>
+                        <div class="add-new">+</div>
+                        <div class="project-input">
+                            <input type="text" id="add-project">
+                            <button>Add Project</button>
+                        </div>
+                        <div class="projects">
+
                         </div>
                     </div>
                 </div>
@@ -119,6 +140,7 @@
             </div>
         </div>
     </div>
+    <script src="main.js"></script>
 </body>
 
 </html>
