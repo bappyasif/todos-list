@@ -15,19 +15,43 @@
             <div class="todo-entry">
                 <input type="text" id="create-task" placeholder="Add your task here....">
                 <div class="task-icons">
-                    <input type="datetime-local" id="date-picker" placeholder="">
+                    <input type="date" id="date-picker" placeholder="">
+                    <!-- <div id="date-picker"></div> -->
                     <div class="icons-div">
                         <!-- <input type="datetime-local" id="date-picker"> -->
-                        <img src="../icons/calendar.svg" alt="" class="todo-icons" id="calendar">
-                        <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons" id="due-date">
-                        <img src="../icons/flag.svg" alt="" class="todo-icons" id="priority">
-                        <img src="../icons/notes.svg" alt="" class="todo-icons" id="notes">
+                        <!-- <img src="../icons/calendar.svg" alt="" class="todo-icons" id="calendar"> -->
+                        <div class="calendar-div">
+                            <img src="../icons/calendar.svg" alt="" class="todo-icons" id="calendar">
+                            <div class="dump-calVal"></div>
+                        </div>
+                        <!-- <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons" id="due-date"> -->
+                        <div class="dueDate-div">
+                            <img src="../icons/alarm-clock-02.svg" alt="" class="todo-icons" id="due-date">
+                            <div class="dump-ddVal"></div>
+                        </div>
+                        <!-- <img src="../icons/flag.svg" alt="" class="todo-icons" id="priority"> -->
+                        <div class="priority-levels">
+                             <!-- <img src="../icons/flag.svg" alt="" class="todo-icons" id="priority"> -->
+                             <select name="select-level" id="levels">
+                                 <!-- <option value="">1</option>
+                                 <option value="">2</option> -->
+                             </select>
+                             <img src="../icons/flag.svg" alt="" class="todo-icons" id="priority">
+                        </div>
+                        <!-- <img src="../icons/notes.svg" alt="" class="todo-icons" id="notes"> -->
+                        <div class="notes-div">
+                            <img src="../icons/notes.svg" alt="" class="todo-icons" id="notes">
+                            <input type="text" name="forNotes" id="about-task">
+                        </div>
                     </div>
                     <div class="task-buttons">
                         <button class="todo-task">Add Task</button>
                         <button class="cancel">Cancel</button>
+                        <!-- <div class="option-elem"></div> -->
                     </div>
+                    <!-- <input type="datetime-local" id="date-picker"> -->
                 </div>
+                <!-- <input type="datetime-local" id="date-picker2"> -->
             </div>
         </div>
         <div class="top-bar">

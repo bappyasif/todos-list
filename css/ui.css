@@ -224,7 +224,7 @@
     position: absolute;
     margin: 200px 0px 0px 191px;
     height: 56px;
-    width: 461px;
+    /* width: 461px; */
     border: 1.1px solid silver;
     background-color: yellowgreen;
     display: none;
@@ -232,7 +232,7 @@
 }
 .task-entry input {
     outline: none;
-    width: 377px;
+    /* width: 377px; */
     border: hidden;
     cursor: pointer;
 }
@@ -244,6 +244,9 @@
 .todo-entry {
     display: flex;
     flex-direction: column;
+    /* justify-content: left;
+    align-content: flex-start;
+    align-self: flex-start; */
 }
 .task-icons {
     display: flex;
@@ -252,31 +255,65 @@
 .task-buttons {
     padding: 11px;
 }
+.icons-div {
+    display: flex;
+}
+#levels {
+    position: absolute;
+    /* position: relative; */
+    margin-top: 35px;
+    display: none;
+    /* width: 99px; */
+}
+option.normal {background-color: silver;}
+option.low {background-color: orange;}
+option.medium {background-color: yellow;}
+option.high {background-color: red;}
+select:focus, select:hover {outline: none; box-shadow: 0 0 1.1px transparent;}
+/* option.normal:hover, option.low:hover {background: teal;} */
+/* select option:checked::after {background: transparent;} */
+/* option:after {
+    content: " ";
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    display: inline-block;
+} */
+/* option.normal:after {background-color: red;} */
 #calendar, #due-date, #priority, #notes {
     transition: all .2s ease-in-out;
 }
 #calendar:hover, #due-date:hover, #priority:hover, #notes:hover {
     transform: scale(2);
 }
-#date-picker {
-    width: 117px;
+#date-picker, #date-picker2 {
+    width: 130px;
     align-self: center;
+    margin: auto;
     background-color: yellowgreen;
     height: max-content;
     border: 1.1px solid yellow;
-    color: transparent;
-    /* color: white; */
-    display: none;
+    /* color: transparent; */
+    color: ivory;
+    /* display: none; */
     /* content: none; */
 }
-/* #date-picker::-webkit-input-placeholder {
-    color: white;
-} */
-/* #date-picker::-moz-placeholder {
-    opacity: 0;
-} */
-/* #date-picker:focus {
-    text-decoration: none;
-    font-size: 11px;
-    height: 11px;
-} */
+.notes-div {
+    display: flex;
+    flex-direction: column;
+}
+.notes-div input {
+    border: 1px solid yellow;
+    background: yellowgreen;
+    position: absolute;
+    /* position: relative; */
+    margin-top: 38px;
+    margin-left: 29px;
+    /* width: 191px; */
+    width: 164px;
+}
+
+.dump-calVal, .dump-ddVal {
+    background: yellowgreen;
+    margin-left: 11px;
+}
