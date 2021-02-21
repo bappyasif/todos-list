@@ -18,6 +18,10 @@
 import displayingProjects from "../js/properAttemptForAssignment/init.js";
 import {addingNewProjectName} from "../js/properAttemptForAssignment/projectNames/addProject.js";
 import {readyTodoTaskEntry} from "../js/properAttemptForAssignment/addTasks/initiateEntry.js";
+// import {displayAllTodoTasks, todos} from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
+import {editTodos} from "../js/properAttemptForAssignment/modifyTodos/edifyTasks.js";
 displayingProjects();
 addingNewProjectName();
 readyTodoTaskEntry();
+// displayAllTodoTasks();
+editTodos();

@@ -1,6 +1,8 @@
 import { startOfToday, format, endOfDay } from "date-fns";
-import { showPriorities, showSelectDDElem } from "./prioritiyLevels.js";
-let taskDate, taskDue, taskPriority, taskNote;
+import { showPriorities, showSelectDDElem, getPrioritySelectedValue } from "./prioritiyLevels.js";
+import {createTask} from "./createTaskUsingFactory.js";
+import {displayTasks, todos, displayAllTodoTasks} from "../showTasks/displayTodos.js";
+let taskDate, taskDue, taskPriority, taskNote, taskTitle;
 taskDate =  document.querySelector(".dump-calVal");
 taskDue = document.querySelector(".dump-ddVal");
 
@@ -12,18 +14,22 @@ function readyTodoTaskEntry() {
         if (entryTask.style.display === "none") {
             entryTask.style.display = "block";
             addTodo.addEventListener("click", (evt) => {
-                // getUserTaskEntry();
-                // if (evt.target.id === "calendar") taskDate = datePicker.value;
-                // else if (evt.target.id === "due-date") taskDue = datePicker.value;
-                console.log(taskDate, taskDue);
-            })
+                taskPriority =  document.querySelector("#levels").value;
+                taskNote = document.querySelector("#about-task").value;
+                taskTitle =  getUserTaskEntry();
+                // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
+                let todoElem = createTask(taskTitle,taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+                // console.log(todoElem);
+                todos.push(todoElem);
+                displayTasks(todoElem.domElem);
+            });
         } else {
             entryTask.style.display = "none";
         }
     });
 }
 
-getUserTaskEntry();
+// getUserTaskEntry();
 getValuesFromIcons();
 
 function getUserTaskEntry() {
@@ -31,6 +37,7 @@ function getUserTaskEntry() {
     let taskTitle = taskInput.value;
     console.log(taskTitle);
     // getValuesFromIcons();
+    return taskTitle;
 }
 
 function getValuesFromIcons() {
@@ -40,6 +47,7 @@ function getValuesFromIcons() {
     showDatePickerElement(dueDate);
     showPriorities();
     showSelectDDElem();
+    // taskPriority =  getPrioritySelectedValue();
     showAndGetNotes();
 }
 
@@ -76,6 +84,7 @@ function showAndGetNotes() {
     notesIcon.addEventListener("click", () => {
         if (noteInput.style.display === "none") {
             noteInput.style.display = "block";
+            // taskNote = noteInput.value;
         } else {
             noteInput.style.display = "none";
         }
@@ -87,6 +96,39 @@ export { readyTodoTaskEntry }
 
 /**
  *
+ * 
+ function readyTodoTaskEntry() {
+    let addTask = document.querySelector("#show-panel");
+    let entryTask = document.querySelector(".task-entry");
+    let addTodo = document.querySelector(".todo-task");
+    addTask.addEventListener("click", () => {
+        if (entryTask.style.display === "none") {
+            entryTask.style.display = "block";
+            addTodo.addEventListener("click", (evt) => {
+                // getUserTaskEntry();
+                // if (evt.target.id === "calendar") taskDate = datePicker.value;
+                // else if (evt.target.id === "due-date") taskDue = datePicker.value;
+                taskPriority =  document.querySelector("#levels").value;
+                taskNote = document.querySelector("#about-task").value;
+                taskTitle =  getUserTaskEntry();
+                // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
+                // console.log(document.querySelector("#levels").value);
+                let todoElem = createTask(taskTitle,taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+                // console.log(todoElem);
+                todos.push(todoElem);
+                // todoElem.id = todoElem.id;
+                displayTasks(todoElem.domElem);
+                // displayTasks();
+                // displayTasks(todoElem);
+                // displayAllTodoTasks();
+            });
+        } else {
+            entryTask.style.display = "none";
+        }
+        // displayAllTodoTasks();
+    });
+}
+ * 
  * 
  function showDatePickerElement(htmlElement) {
     htmlElement.addEventListener("click", () => {
