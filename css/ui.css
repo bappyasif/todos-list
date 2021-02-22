@@ -171,7 +171,6 @@
 }
 .checklist-div label {
     background-color: #fff;
-    /* background-color: inherit; */
     border: 1px solid #ccc;
     border-radius: 50%;
     cursor: pointer;
@@ -181,9 +180,12 @@
     top: 0;
     width: 29px;
 }
-.checklist-div input[type="checkbox"]:checked + label {
-    background-color: greenyellow;
+.highlight-check label {
+    background-color: yellowgreen;
 }
+/* .checklist-div input[type="checkbox"]:checked + label {
+    background-color: greenyellow;
+} */
 .checklist-div input {
     outline: none;
     visibility: hidden;

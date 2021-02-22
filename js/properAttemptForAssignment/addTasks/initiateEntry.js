@@ -14,6 +14,7 @@ function readyTodoTaskEntry() {
         if (entryTask.style.display === "none") {
             entryTask.style.display = "block";
             addTodo.addEventListener("click", (evt) => {
+                getValuesFromIcons();
                 taskPriority =  document.querySelector("#levels").value;
                 taskNote = document.querySelector("#about-task").value;
                 taskTitle =  getUserTaskEntry();
@@ -30,7 +31,7 @@ function readyTodoTaskEntry() {
 }
 
 // getUserTaskEntry();
-getValuesFromIcons();
+// getValuesFromIcons();
 
 function getUserTaskEntry() {
     let taskInput = document.querySelector("#create-task");
