@@ -181,7 +181,8 @@
     width: 29px;
 }
 .highlight-check label {
-    background-color: yellowgreen;
+    /* background-color: yellowgreen; */
+    background-color: silver;
 }
 /* .checklist-div input[type="checkbox"]:checked + label {
     background-color: greenyellow;
@@ -224,7 +225,8 @@
 /* all about task entry */
 .task-entry {
     position: absolute;
-    margin: 200px 0px 0px 191px;
+    /* margin: 200px 0px 0px 191px; */
+    margin: 200px 0px 0px 31%;
     height: 56px;
     /* width: 461px; */
     border: 1.1px solid silver;
@@ -314,8 +316,40 @@ select:focus, select:hover {outline: none; box-shadow: 0 0 1.1px transparent;}
     /* width: 191px; */
     width: 164px;
 }
-
 .dump-calVal, .dump-ddVal {
     background: yellowgreen;
     margin-left: 11px;
+}
+/* trying out animation for .task-entry div */
+.task-entry {
+    animation: 1.1s;
+    animation-name: slidein;
+}
+.sliding-out {
+    animation: .1s;
+    animation-name: slideout;
+    /* animation-direction: alternate; */
+}
+@keyframes slideout {
+    from {
+        margin-top: 31%;
+    }
+    to {
+        margin-top: 0%;
+    }
+}
+@keyframes slidein {
+    from {
+        /* margin-top: 92%; */
+        margin-top: 0%;
+    }
+    to {
+        /* margin-top: 31%; */
+        margin-top: 31%;
+    }
+}
+/* todo-elem for striking through */
+.strike-through {
+    text-decoration: line-through;
+    opacity: .31;
 }

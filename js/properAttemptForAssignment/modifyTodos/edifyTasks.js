@@ -1,19 +1,25 @@
+import { startOfSecond } from "date-fns/fp";
 import { todos } from "../showTasks/displayTodos.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
-    tasksContainer.addEventListener("click", evt => {
-        if (evt.target.id === "task-check") {
-            evt.stopPropagation();
-            console.log("it's here!!");
-            evt.stopImmediatePropagation();
-            if(evt.target.parentNode.className === "checklist-div") {
-                evt.target.parentNode.classList.add("highlight-check");
-            } else {
-                evt.target.parentNode.classList.remove("highlight-check");
-            }
-        }
-    });
+    tasksContainer.addEventListener("click", evt => handleHighlightCheckboxDiv(evt));
 }
+
+function handleHighlightCheckboxDiv(evt) {
+    // previously it wasn't pointing to seelected element because all id's were same and it used to matchees with first found match
+    // and now after modifying our htmlFragment for each task for checklist-div id with id number appended after making it unique for DOM
+    if (evt.target.id.startsWith("task-check")) {
+        if (evt.target.parentNode.className === "checklist-div") {
+            evt.target.parentNode.classList.add("highlight-check");
+            evt.target.parentNode.parentNode.classList.add("strike-through");
+        } else {
+            evt.target.parentNode.classList.remove("highlight-check");
+            evt.target.parentNode.parentNode.classList.remove("strike-through");
+        }
+    }
+}
+
+export { editTodos }
 
 /**
  * this highlight both first and any other element which is clciked from list of tasks!!
@@ -32,12 +38,45 @@ function editTodos() {
 //         }
 //     });
 // }
-
-export { editTodos }
-
 /**
- * 
- * 
+ *
+ *
+ function editTodos() {
+    let tasksContainer = document.querySelector(".tasks-container");
+    tasksContainer.addEventListener("click", evt => {
+        // previously it wasn't pointing to seelected element because all id's were same and it used to matchees with first found match
+        // and now after modifying our htmlFragment for each task for checklist-div id with id number appended after making it unique for DOM
+        if (evt.target.id.startsWith("task-check")) {
+            evt.stopPropagation();
+            console.log("it's here!!");
+            evt.stopImmediatePropagation();
+            if(evt.target.parentNode.className === "checklist-div") {
+                evt.target.parentNode.classList.add("highlight-check");
+            } else {
+                evt.target.parentNode.classList.remove("highlight-check");
+            }
+        }
+    });
+}
+ *
+ *
+ function editTodos() {
+    let tasksContainer = document.querySelector(".tasks-container");
+    tasksContainer.addEventListener("click", evt => {
+        if (evt.target.id === "task-check") {
+            evt.stopPropagation();
+            console.log("it's here!!");
+            evt.stopImmediatePropagation();
+            if(evt.target.parentNode.className === "checklist-div") {
+                evt.target.parentNode.classList.add("highlight-check");
+            } else {
+                evt.target.parentNode.classList.remove("highlight-check");
+            }
+        }
+    });
+}
+ *
+ *
  function editTodos() {
     document.querySelector(".tasks-container")
     .addEventListener("click", evt => {
@@ -51,8 +90,8 @@ export { editTodos }
         }
     });
 }
- * 
- * 
+ *
+ *
  function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => {

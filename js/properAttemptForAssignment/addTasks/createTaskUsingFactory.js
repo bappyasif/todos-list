@@ -1,3 +1,4 @@
+import {showProjectNamesDD, ddForFactoryFunction} from "../projectNames/showDropdowns.js";
 let count = 0;
 let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     let obj = new Object();
@@ -12,8 +13,8 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     <div class="todo-elem" id=${obj.id}>
         <div class="task-info">
         <div class="checklist-div">
-            <input type="checkbox" id="task-check">
-            <label for="task-check"></label>
+            <input type="checkbox" id="task-check-${obj.id}">
+            <label for="task-check-${obj.id}"></label>
         </div>
         <div class="task-name">
             <div class="task-text">${obj.title}</div>
@@ -26,7 +27,11 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
             <div class="priority-level">
                 <div class="priority-tooltip">Priority Level</div>
             </div>
-            <div class="project-name">Dummy Entry</div>
+            <!-- <div class="project-name">Dummy Entry</div> -->
+            <div class="project-name">
+            <select class="choose-project"></select>
+                <!-- <select class="choose-project">${ddForFactoryFunction()}</select> -->
+            </div>
         </div>
     </div>
     <div class="task-note">${obj.taskNote}</div>

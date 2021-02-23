@@ -20,8 +20,10 @@ import {addingNewProjectName} from "../js/properAttemptForAssignment/projectName
 import {readyTodoTaskEntry} from "../js/properAttemptForAssignment/addTasks/initiateEntry.js";
 // import {displayAllTodoTasks, todos} from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
 import {editTodos} from "../js/properAttemptForAssignment/modifyTodos/edifyTasks.js";
+// import {showProjectNamesDD} from "../js/properAttemptForAssignment/projectNames/showDropdowns.js";
 displayingProjects();
 addingNewProjectName();
 readyTodoTaskEntry();
 // displayAllTodoTasks();
 editTodos();
+// showProjectNamesDD();

@@ -2,6 +2,7 @@ import { startOfToday, format, endOfDay } from "date-fns";
 import { showPriorities, showSelectDDElem, getPrioritySelectedValue } from "./prioritiyLevels.js";
 import { createTask } from "./createTaskUsingFactory.js";
 import { displayTasks, todos, displayAllTodoTasks } from "../showTasks/displayTodos.js";
+// import {showProjectNamesDD, justDropdowns} from "../projectNames/showDropdowns.js";
 let taskDate, taskDue, taskPriority, taskNote, taskTitle;
 taskDate = document.querySelector(".dump-calVal");
 taskDue = document.querySelector(".dump-ddVal");
@@ -17,17 +18,22 @@ function readyTodoTaskEntry() {
 }
 
 function handleCancel(evt) {
+    // entryTask.classList.add("slideout");
+    entryTask.classList.add("sliding-out");
     entryTask.style.display = "none";
 }
 
 function showPanel() {
     if (entryTask.style.display === "none") {
         entryTask.style.display = "block";
+        // entryTask.classList.remove("sliding-out");
         addTodo.addEventListener("click", addingTodo);
     } else {
-        entryTask.style.display = "none";
         addTask.removeEventListener("click", showPanel);
         addTodo.removeEventListener("click", addingTodo);
+        // entryTask.classList.add("sliding-out");
+        entryTask.style.display = "none";
+        // entryTask.classList.add("slideout");
     }
 }
 
@@ -40,6 +46,8 @@ function addingTodo(evt) {
     let todoElem = createTask(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
     todos.push(todoElem);
     displayTasks(todoElem.domElem);
+    // showProjectNamesDD();
+    // justDropdowns();
 }
 
 // getUserTaskEntry();
@@ -100,6 +108,35 @@ export { readyTodoTaskEntry }
 
 
 /**
+ * 
+ * 
+ function showPanel() {
+    // if (entryTask.classList.contains("slideout")) {
+    //     // entryTask.classList.remove("slideout");
+    //     entryTask.style.display = "block";
+    //     addTodo.addEventListener("click", addingTodo);
+    //     entryTask.classList.remove("slideout");
+    // } else {
+    //     addTask.removeEventListener("click", showPanel);
+    //     addTodo.removeEventListener("click", addingTodo);
+    //     entryTask.classList.add("slideout");
+    //     entryTask.style.display = "none";
+    //     // entryTask.classList.add("slideout");
+    // }
+    if (entryTask.style.display === "none") {
+        entryTask.style.display = "block";
+        // entryTask.classList.remove("slidin");
+        entryTask.classList.remove("sliding-out");
+        addTodo.addEventListener("click", addingTodo);
+    } else {
+        addTask.removeEventListener("click", showPanel);
+        addTodo.removeEventListener("click", addingTodo);
+        // entryTask.classList.add("slidin");
+        entryTask.classList.add("sliding-out");
+        entryTask.style.display = "none";
+        // entryTask.classList.add("slideout");
+    }
+}
  * 
  * 
  function getValuesFromIcons() {
