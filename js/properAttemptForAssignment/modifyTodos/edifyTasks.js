@@ -4,6 +4,8 @@ function editTodos() {
     tasksContainer.addEventListener("click", evt => {
         if (evt.target.id === "task-check") {
             evt.stopPropagation();
+            console.log("it's here!!");
+            evt.stopImmediatePropagation();
             if(evt.target.parentNode.className === "checklist-div") {
                 evt.target.parentNode.classList.add("highlight-check");
             } else {

@@ -1,43 +1,54 @@
 import { startOfToday, format, endOfDay } from "date-fns";
 import { showPriorities, showSelectDDElem, getPrioritySelectedValue } from "./prioritiyLevels.js";
-import {createTask} from "./createTaskUsingFactory.js";
-import {displayTasks, todos, displayAllTodoTasks} from "../showTasks/displayTodos.js";
+import { createTask } from "./createTaskUsingFactory.js";
+import { displayTasks, todos, displayAllTodoTasks } from "../showTasks/displayTodos.js";
 let taskDate, taskDue, taskPriority, taskNote, taskTitle;
-taskDate =  document.querySelector(".dump-calVal");
+taskDate = document.querySelector(".dump-calVal");
 taskDue = document.querySelector(".dump-ddVal");
+let addTask = document.querySelector("#show-panel");
+let entryTask = document.querySelector(".task-entry");
+let addTodo = document.querySelector(".todo-task");
+let cancel =  document.querySelector(".cancel");
 
 function readyTodoTaskEntry() {
-    let addTask = document.querySelector("#show-panel");
-    let entryTask = document.querySelector(".task-entry");
-    let addTodo = document.querySelector(".todo-task");
-    addTask.addEventListener("click", () => {
-        if (entryTask.style.display === "none") {
-            entryTask.style.display = "block";
-            addTodo.addEventListener("click", (evt) => {
-                getValuesFromIcons();
-                taskPriority =  document.querySelector("#levels").value;
-                taskNote = document.querySelector("#about-task").value;
-                taskTitle =  getUserTaskEntry();
-                // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
-                let todoElem = createTask(taskTitle,taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
-                // console.log(todoElem);
-                todos.push(todoElem);
-                displayTasks(todoElem.domElem);
-            });
-        } else {
-            entryTask.style.display = "none";
-        }
-    });
+    addTask.addEventListener("click", evt=>showPanel(evt));
+    // addTask.removeEventListener("click", showPanel);
+    cancel.addEventListener("click", evt => handleCancel(evt));
+}
+
+function handleCancel(evt) {
+    entryTask.style.display = "none";
+}
+
+function showPanel() {
+    if (entryTask.style.display === "none") {
+        entryTask.style.display = "block";
+        addTodo.addEventListener("click", addingTodo);
+    } else {
+        entryTask.style.display = "none";
+        addTask.removeEventListener("click", showPanel);
+        addTodo.removeEventListener("click", addingTodo);
+    }
+}
+
+function addingTodo(evt) {
+    // getValuesFromIcons() will mediate this user entries values for this function
+    taskPriority = document.querySelector("#levels").value;
+    taskNote = document.querySelector("#about-task").value;
+    taskTitle = getUserTaskEntry();
+    // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
+    let todoElem = createTask(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+    todos.push(todoElem);
+    displayTasks(todoElem.domElem);
 }
 
 // getUserTaskEntry();
-// getValuesFromIcons();
+getValuesFromIcons();
 
 function getUserTaskEntry() {
     let taskInput = document.querySelector("#create-task");
     let taskTitle = taskInput.value;
-    console.log(taskTitle);
-    // getValuesFromIcons();
+    // console.log(taskTitle);
     return taskTitle;
 }
 
@@ -48,7 +59,6 @@ function getValuesFromIcons() {
     showDatePickerElement(dueDate);
     showPriorities();
     showSelectDDElem();
-    // taskPriority =  getPrioritySelectedValue();
     showAndGetNotes();
 }
 
@@ -58,19 +68,13 @@ function showDatePickerElement(htmlElement) {
         datePicker.value = format(startOfToday(), "yyyy-MM-dd");
         if (datePicker.style.display === "none") {
             datePicker.style.display = "block";
-            if(htmlElement.id==="calendar") {
-                // datePicker.addEventListener("change", () => {
-                //     taskDate.textContent =  datePicker.value;
-                // });
-                taskDate.textContent =  datePicker.value;
-            } else if(htmlElement.id === "due-date") {
+            if (htmlElement.id === "calendar") {
+                taskDate.textContent = datePicker.value;
+            } else if (htmlElement.id === "due-date") {
                 datePicker.addEventListener("change", () => {
                     taskDue.textContent = datePicker.value;
                 });
-                // taskDue.textContent = datePicker.value;
             }
-            // datePicker.value = format(startOfToday(), "yyyy-MM-dd");
-            
         } else {
             datePicker.value = "";
             datePicker.style.display = "none";
@@ -96,8 +100,108 @@ export { readyTodoTaskEntry }
 
 
 /**
- *
  * 
+ * 
+ function getValuesFromIcons() {
+    let calendar = document.querySelector("#calendar");
+    showDatePickerElement(calendar);
+    let dueDate = document.querySelector("#due-date");
+    showDatePickerElement(dueDate);
+    showPriorities();
+    showSelectDDElem();
+    // taskPriority =  getPrioritySelectedValue();
+    showAndGetNotes();
+}
+ * 
+ * 
+ function showDatePickerElement(htmlElement) {
+    htmlElement.addEventListener("click", () => {
+        let datePicker = document.querySelector("#date-picker");
+        datePicker.value = format(startOfToday(), "yyyy-MM-dd");
+        if (datePicker.style.display === "none") {
+            datePicker.style.display = "block";
+            if (htmlElement.id === "calendar") {
+                // datePicker.addEventListener("change", () => {
+                //     taskDate.textContent =  datePicker.value;
+                // });
+                taskDate.textContent = datePicker.value;
+            } else if (htmlElement.id === "due-date") {
+                datePicker.addEventListener("change", () => {
+                    taskDue.textContent = datePicker.value;
+                });
+                // taskDue.textContent = datePicker.value;
+            }
+            // datePicker.value = format(startOfToday(), "yyyy-MM-dd");
+
+        } else {
+            datePicker.value = "";
+            datePicker.style.display = "none";
+        }
+    });
+}
+ * 
+ * 
+ function readyTodoTaskEntry() {
+    // let addTask = document.querySelector("#show-panel");
+    // let entryTask = document.querySelector(".task-entry");
+    // let addTodo = document.querySelector(".todo-task");
+    addTask.addEventListener("click", evt=>showPanel(evt));
+    addTask.removeEventListener("click", showPanel);
+}
+
+function showPanel() {
+    if (entryTask.style.display === "none") {
+        entryTask.style.display = "block";
+        addTodo.addEventListener("click", addingTodo);
+        // addTodo.addEventListener("click", evt => addingTodo);
+        // addTodo.removeEventListener("click", addingTodo);
+        // addTask.removeEventListener("click", showPanel);
+    } else {
+        entryTask.style.display = "none";
+        // addTask.removeEventListener("click", showPanel);
+        addTodo.removeEventListener("click", addingTodo);
+    }
+}
+
+function addingTodo(evt) {
+    taskPriority = document.querySelector("#levels").value;
+    taskNote = document.querySelector("#about-task").value;
+    taskTitle = getUserTaskEntry();
+    console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
+    let todoElem = createTask(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+    todos.push(todoElem);
+    displayTasks(todoElem.domElem);
+}
+ *
+ *
+ function readyTodoTaskEntry() {
+    let addTask = document.querySelector("#show-panel");
+    let entryTask = document.querySelector(".task-entry");
+    let addTodo = document.querySelector(".todo-task");
+    addTask.addEventListener("click", addingTask);
+    addTask.addEventListener("click", () => {
+        if (entryTask.style.display === "none") {
+            entryTask.style.display = "block";
+            addTodo.addEventListener("click", (evt) => {
+                // getValuesFromIcons();
+                taskPriority =  document.querySelector("#levels").value;
+                taskNote = document.querySelector("#about-task").value;
+                taskTitle =  getUserTaskEntry();
+                // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
+                let todoElem = createTask(taskTitle,taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+                // console.log(todoElem);
+                todos.push(todoElem);
+                displayTasks(todoElem.domElem);
+                addTodo.removeEventListener("click");
+            });
+        } else {
+            entryTask.style.display = "none";
+            addTask.removeEventListener("click");
+        }
+    });
+}
+ *
+ *
  function readyTodoTaskEntry() {
     let addTask = document.querySelector("#show-panel");
     let entryTask = document.querySelector(".task-entry");
@@ -129,8 +233,8 @@ export { readyTodoTaskEntry }
         // displayAllTodoTasks();
     });
 }
- * 
- * 
+ *
+ *
  function showDatePickerElement(htmlElement) {
     htmlElement.addEventListener("click", () => {
         let datePicker = document.querySelector("#date-picker");
@@ -149,14 +253,14 @@ export { readyTodoTaskEntry }
                 taskDue.textContent = datePicker.value;
             }
             // datePicker.value = format(startOfToday(), "yyyy-MM-dd");
-            
+
         } else {
             datePicker.value = "";
             datePicker.style.display = "none";
         }
     });
 }
- * 
+ *
  *
  function getValuesFromIcons() {
     let calendar =  document.querySelector("#calendar");
