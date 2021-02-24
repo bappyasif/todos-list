@@ -1,9 +1,9 @@
-import {existingProjects} from "../projectNames/showNames.js";
+import { existingProjects } from "../projectNames/showNames.js";
 function showProjectNamesDD() {
     let projectDD = document.querySelector(".choose-project");
-    for(let i=0; i<existingProjects.length; i++) {
+    for (let i = 0; i < existingProjects.length; i++) {
         let option = document.createElement("option");
-        option.value =  existingProjects[i];
+        option.value = existingProjects[i];
         option.textContent = existingProjects[i];
         projectDD.append(option);
     }
@@ -12,10 +12,14 @@ function showProjectNamesDD() {
 
 function justDropdowns(projectDD) {
     // let projectDD = document.querySelector(".choose-project");
-    for(let i=0; i<existingProjects.length; i++) {
+    for (let i = 0; i < existingProjects.length; i++) {
         let option = document.createElement("option");
-        option.value =  existingProjects[i];
-        option.textContent = existingProjects[i];
+        // option.value =  existingProjects[i];
+        // option.textContent = existingProjects[i];
+        if (existingProjects.findIndex(item=>option.value.includes(item)) === -1) {
+            option.value = existingProjects[i];
+            option.textContent = existingProjects[i];
+        }
         // console.log("??");
         projectDD.append(option);
     }
@@ -23,9 +27,9 @@ function justDropdowns(projectDD) {
 
 function ddForFactoryFunction() {
     let fillerOp = document.createElement("select");
-    for(let i=0; i<existingProjects.length; i++) {
+    for (let i = 0; i < existingProjects.length; i++) {
         let option = document.createElement("option");
-        option.value =  existingProjects[i];
+        option.value = existingProjects[i];
         option.textContent = existingProjects[i];
         // console.log("??");
         fillerOp.append(option);
@@ -33,11 +37,11 @@ function ddForFactoryFunction() {
     return fillerOp;
 }
 
-export {showProjectNamesDD, justDropdowns, ddForFactoryFunction}
+export { showProjectNamesDD, justDropdowns, ddForFactoryFunction }
 
 /**
- * 
- * 
+ *
+ *
  function showProjectNamesDD() {
     let projectDD = document.querySelector("#choose-project");
     for(let i=0; i<existingProjects.length; i++) {

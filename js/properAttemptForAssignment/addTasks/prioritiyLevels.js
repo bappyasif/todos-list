@@ -32,7 +32,7 @@ function getPrioritySelectedValue() {
     return prLevel;
 }
 
-export { showPriorities, showSelectDDElem, getPrioritySelectedValue }
+export { showPriorities, showSelectDDElem, getPrioritySelectedValue, priorities }
 
 
 /**

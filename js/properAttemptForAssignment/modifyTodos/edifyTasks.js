@@ -1,20 +1,36 @@
 import { startOfSecond } from "date-fns/fp";
 import { todos } from "../showTasks/displayTodos.js";
+import {coloringPrioritiesFromDD} from "../priorityColors/colorCoating.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
-    tasksContainer.addEventListener("click", evt => handleHighlightCheckboxDiv(evt));
+    tasksContainer.addEventListener("click", evt => handleModification(evt));
 }
 
-function handleHighlightCheckboxDiv(evt) {
+function handleModification(evt) {
+    handleHighlightingCheckboxDiv(evt);
+    if(evt.target.id.startsWith("levels-dd")) handleColorCoatingPriority(evt);
+}
+
+function handleColorCoatingPriority(evt)  {
+    let ddValue = evt.target.value;
+    let divID = evt.target.id;
+    // console.log(ddValue, divID);
+    // coloringPrioritiesFromDD(ddValue);
+    coloringPrioritiesFromDD(ddValue, divID);
+}
+
+function handleHighlightingCheckboxDiv(evt) {
     // previously it wasn't pointing to seelected element because all id's were same and it used to matchees with first found match
     // and now after modifying our htmlFragment for each task for checklist-div id with id number appended after making it unique for DOM
     if (evt.target.id.startsWith("task-check")) {
         if (evt.target.parentNode.className === "checklist-div") {
             evt.target.parentNode.classList.add("highlight-check");
-            evt.target.parentNode.parentNode.classList.add("strike-through");
+            // targeting .todo-elem
+            evt.target.parentNode.parentNode.parentNode.classList.add("strike-through");
         } else {
             evt.target.parentNode.classList.remove("highlight-check");
-            evt.target.parentNode.parentNode.classList.remove("strike-through");
+            // targeting .todo-elem
+            evt.target.parentNode.parentNode.parentNode.classList.remove("strike-through");
         }
     }
 }
@@ -39,6 +55,24 @@ export { editTodos }
 //     });
 // }
 /**
+ * 
+ * 
+ function handleHighlightCheckboxDiv(evt) {
+    // previously it wasn't pointing to seelected element because all id's were same and it used to matchees with first found match
+    // and now after modifying our htmlFragment for each task for checklist-div id with id number appended after making it unique for DOM
+    if (evt.target.id.startsWith("task-check")) {
+        if (evt.target.parentNode.className === "checklist-div") {
+            // evt.target.parentNode.parentNode.classList.add("highlight-check");
+            evt.target.parentNode.classList.add("highlight-check");
+            // evt.target.parentNode.parentNode.classList.add("strike-through");
+            evt.target.parentNode.parentNode.parentNode.classList.add("strike-through");
+        } else {
+            evt.target.parentNode.classList.remove("highlight-check");
+            // evt.target.parentNode.parentNode.classList.remove("strike-through");
+            evt.target.parentNode.parentNode.parentNode.classList.remove("strike-through");
+        }
+    }
+}
  *
  *
  function editTodos() {
