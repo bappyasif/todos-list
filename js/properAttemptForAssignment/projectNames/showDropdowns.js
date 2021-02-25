@@ -25,6 +25,16 @@ function justDropdowns(projectDD) {
     }
 }
 
+function justDropdownsWithSelected(projectDropdown, selectedValue) {
+    // projectDropdown.options[projectDropdown.selectedIndex].value = selectedValue;
+    // projectDropdown.value = selectedValue;
+    // projectDropdown = selectedValue;
+    // projectDropdown.options[projectDropdown.selectedIndex] = selectedValue;
+    // projectDropdown.options[projectDropdown.selectedIndex].text = selectedValue;
+    // projectDropdown = projectDropdown.selectedOptions[0].value;
+    projectDropdown.selectedOptions[0].value = selectedValue;
+}
+
 function ddForFactoryFunction() {
     let fillerOp = document.createElement("select");
     for (let i = 0; i < existingProjects.length; i++) {
@@ -37,7 +47,7 @@ function ddForFactoryFunction() {
     return fillerOp;
 }
 
-export { showProjectNamesDD, justDropdowns, ddForFactoryFunction }
+export { showProjectNamesDD, justDropdowns, ddForFactoryFunction, justDropdownsWithSelected }
 
 /**
  *

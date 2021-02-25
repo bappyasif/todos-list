@@ -14,7 +14,7 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     obj.id = increaseCount();
     obj.prjDD = existingProjects;
     obj.getDOM = `<div class="tasks-container">
-    <div class="todo-elem" id=${obj.id}>
+    <div class="todo-elem" id="todo-elem-"${obj.id}>
         <div class="task-info">
         <div class="checklist-div">
             <input type="checkbox" id="task-check-${obj.id}">
@@ -31,8 +31,9 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
             <div class="priority-dd">
                 <select class="levels" id="levels-dd-${obj.id}">${
         // priorities.map(item=>`<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`)
-        priorities.map(item =>
-            `<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+        priorities.map(item => {
+            return `<option ${item === obj.priorityLevel ? "selected" : ""} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`;
+        }
         )
         }</select>
             </div>
@@ -41,7 +42,8 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
             </div>
             <!-- <div class="project-name">Dummy Entry</div> -->
             <div class="project-name">
-                <select class="choose-project"></select>
+                <select class="choose-project" id="choose-project-${obj.id}"></select>
+                <!-- <select class="choose-project" id="choose-project-${obj.id}" selected></select> -->
             </div>
         </div>
     </div>
@@ -64,6 +66,26 @@ export { createTask }
 
 
 /**
+ * 
+ * 
+ <select class="levels" id="levels-dd-${obj.id}">${
+        // priorities.map(item=>`<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`)
+        priorities.map(item => {
+            return `<option ${item === obj.priorityLevel ? "selected" : ""} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            
+            // return `<option ${item === obj.priorityLevel ? "selected" : false} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            // return `<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            // console.log(item===obj.priorityLevel);
+            // return `<option selected="${item === obj.priorityLevel ? true : false}" value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            
+            // if (item === obj.priorityLevel) {
+            //     `<option selected=${true} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            // } else {
+            //     `<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
+            // }
+        }
+        )
+        }</select>
  *
  *
  obj.getDOM = `<div class="tasks-container">

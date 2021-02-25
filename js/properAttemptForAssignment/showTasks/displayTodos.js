@@ -1,5 +1,6 @@
 import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
 import { showProjectNamesDD, justDropdowns } from "../projectNames/showDropdowns.js";
+import {justDropdownsWithSelected} from "../projectNames/showDropdowns.js";
 let todos = [];
 
 function displayTasks(htmlFragment) {
@@ -32,6 +33,9 @@ function displayAllTodoTasks() {
         item.domElem.querySelector(".choose-project").innerHTML = "";
         justDropdowns(item.domElem.querySelector(".choose-project"));
         // priorityLevelsColorCoating();
+        
+        // updating dropdowns selected value, at lleast trying to!!
+        justDropdownsWithSelected(item.domElem.querySelector(".choose-project"), item.domElem.querySelector(".choose-project").value);
     });
     // priorityLevelsColorCoating();
 }

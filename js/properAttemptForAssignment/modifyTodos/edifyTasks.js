@@ -1,6 +1,7 @@
 import { startOfSecond } from "date-fns/fp";
 import { todos } from "../showTasks/displayTodos.js";
 import {coloringPrioritiesFromDD} from "../priorityColors/colorCoating.js";
+import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => handleModification(evt));
@@ -9,6 +10,39 @@ function editTodos() {
 function handleModification(evt) {
     handleHighlightingCheckboxDiv(evt);
     if(evt.target.id.startsWith("levels-dd")) handleColorCoatingPriority(evt);
+    if(evt.target.id.startsWith("choose-project")) handleProjectTodoTask(evt);
+}
+
+function handleProjectTodoTask(evt) {
+    let idCurated = evt.target.id.split("-")[2];
+    // groupify = [];
+    todos.forEach(item => {
+        let projectSelect = item.domElem.querySelector("#choose-project-"+item.id);
+        let getProjectName =  projectSelect.value;
+        
+        // projectSelect.value = projectSelect.options[projectSelect.selectedIndex];
+        // projectSelect.value = getProjectName;
+
+        let taskNode = projectSelect.parentNode.parentNode.parentNode;
+        let taskTitle = taskNode.querySelector(".task-text").textContent;
+        let isTrue = checkGroupify(idCurated);
+        console.log("true::",isTrue);
+        if(isTrue) groupify.push({projectName:getProjectName, taskTitle:taskTitle, taskID: idCurated});
+        groupTodosByProjects(getProjectName, taskTitle, idCurated);
+    });
+}
+
+function checkGroupify(id) {
+    groupify.forEach(item => {
+        if(item.taskID === id) {
+            return false;
+        } 
+        // else {
+        //     return true;
+        // }
+        // return true;
+    });
+    return true;
 }
 
 function handleColorCoatingPriority(evt)  {
@@ -55,6 +89,58 @@ export { editTodos }
 //     });
 // }
 /**
+ * 
+ * 
+ function handleProjectTodoTask(evt) {
+    let idCurated = evt.target.id.split("-")[2];
+    // groupify = [];
+    todos.forEach(item => {
+        let itemProjectName = item.domElem.querySelector("#choose-project-"+item.id);
+        let getProjectName =  itemProjectName.value;
+        
+        let taskNode = itemProjectName.parentNode.parentNode.parentNode;
+        let taskTitle = taskNode.querySelector(".task-text").textContent;
+        groupify.push({projectName:getProjectName, taskTitle:taskTitle, taskID: idCurated})
+        groupTodosByProjects(getProjectName, taskTitle, taskID);
+    });
+}
+ * 
+ * 
+ function handleProjectTodoTask(evt) {
+    // console.log("changed!!");
+    let idCurated = evt.target.id.split("-")[2];
+    // console.log(idCurated);
+    todos.forEach(item => {
+        // console.log(item.id);
+        let itemProjectName = item.domElem.querySelector("#choose-project-"+item.id);
+        console.log(itemProjectName);
+        let getProjectName =  itemProjectName.value;
+        // console.log(getProjectName);
+        // itemProjectName.value = getProjectName;
+        // console.log(itemProjectName);
+        // let taskNode = item.domElem.querySelector("#todo-elem-"+item.id);
+        
+        let taskNode = itemProjectName.parentNode.parentNode.parentNode;
+        // console.log(taskNode);
+        let taskTitle = taskNode.querySelector(".task-text").textContent;
+        // console.log(taskTitle, getProjectName);
+        groupTodosByProjects(getProjectName, taskTitle);
+
+    });
+}
+ * 
+ * 
+ function handleProjectTodoTask(evt) {
+    // console.log("changed!!");
+    let idCurated = evt.target.id.split("-")[2];
+    // console.log(idCurated);
+    todos.forEach(item => {
+        console.log(item.id);
+        if(item.id === idCurated) {
+            console.log(item.id, idCurated);
+        }
+    });
+}
  * 
  * 
  function handleHighlightCheckboxDiv(evt) {
