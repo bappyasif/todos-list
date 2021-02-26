@@ -1,7 +1,8 @@
 import { startOfSecond } from "date-fns/fp";
 import { todos } from "../showTasks/displayTodos.js";
 import {coloringPrioritiesFromDD} from "../priorityColors/colorCoating.js";
-import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
+// import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
+import {groupTodosByProjects, groupifyTasks} from "../groupTasks/byName.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => handleModification(evt));
@@ -14,35 +15,13 @@ function handleModification(evt) {
 }
 
 function handleProjectTodoTask(evt) {
-    let idCurated = evt.target.id.split("-")[2];
-    // groupify = [];
     todos.forEach(item => {
         let projectSelect = item.domElem.querySelector("#choose-project-"+item.id);
         let getProjectName =  projectSelect.value;
-        
-        // projectSelect.value = projectSelect.options[projectSelect.selectedIndex];
-        // projectSelect.value = getProjectName;
-
-        let taskNode = projectSelect.parentNode.parentNode.parentNode;
-        let taskTitle = taskNode.querySelector(".task-text").textContent;
-        let isTrue = checkGroupify(idCurated);
-        console.log("true::",isTrue);
-        if(isTrue) groupify.push({projectName:getProjectName, taskTitle:taskTitle, taskID: idCurated});
-        groupTodosByProjects(getProjectName, taskTitle, idCurated);
+        item.projectName = getProjectName;
+        // item.projectName = getProjectName || "Daily Chore";
+        groupTodosByProjects();
     });
-}
-
-function checkGroupify(id) {
-    groupify.forEach(item => {
-        if(item.taskID === id) {
-            return false;
-        } 
-        // else {
-        //     return true;
-        // }
-        // return true;
-    });
-    return true;
 }
 
 function handleColorCoatingPriority(evt)  {
@@ -89,6 +68,39 @@ export { editTodos }
 //     });
 // }
 /**
+ * 
+ * 
+ function handleProjectTodoTask(evt) {
+    let idCurated = evt.target.id.split("-")[2];
+    // groupify = [];
+    todos.forEach(item => {
+        let projectSelect = item.domElem.querySelector("#choose-project-"+item.id);
+        let getProjectName =  projectSelect.value;
+        item.projectName = getProjectName;
+        // projectSelect.value = projectSelect.options[projectSelect.selectedIndex];
+        // projectSelect.value = getProjectName;
+
+        let taskNode = projectSelect.parentNode.parentNode.parentNode;
+        let taskTitle = taskNode.querySelector(".task-text").textContent;
+        let isTrue = checkGroupify(idCurated);
+        console.log("true::",isTrue);
+        if(isTrue) groupify.push({projectName:getProjectName, taskTitle:taskTitle, taskID: idCurated});
+        groupTodosByProjects(getProjectName, taskTitle, idCurated);
+    });
+}
+
+function checkGroupify(id) {
+    groupify.forEach(item => {
+        if(item.taskID === id) {
+            return false;
+        } 
+        // else {
+        //     return true;
+        // }
+        // return true;
+    });
+    return true;
+}
  * 
  * 
  function handleProjectTodoTask(evt) {

@@ -2,9 +2,53 @@ import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
 import { showProjectNamesDD, justDropdowns } from "../projectNames/showDropdowns.js";
 import {justDropdownsWithSelected} from "../projectNames/showDropdowns.js";
 let todos = [];
+let tasksContainer = document.querySelector(".tasks-container");
 
 function displayTasks(htmlFragment) {
-    let tasksContainer = document.querySelector(".tasks-container");
+    tasksContainer.append(htmlFragment);
+    displayAllTodoTasks();
+    // this way of calling colorCoating causes dom to render after a new option is being selected
+    // rather implemented this from colorCoating and edifyTasks instead, tageting each nodes for color coating
+    priorityLevelsColorCoating();
+    // showProjectNamesDD();
+}
+
+function displayAllTodoTasks() {
+    removeAllChildNodes(tasksContainer);
+    console.log(todos.length, todos[todos.length - 1]);
+    todos.forEach(item => {
+        tasksContainer.appendChild(item.domElem);
+        // justDropdowns(item.domElem.querySelector(".choose-project"))
+        // it needed to have its previously curated task's project dropdowns to be cleaned so that it doesn't get accumulated
+        // also found a workaround it using factory function domString for each task and using options within select tag from there using map()
+        item.domElem.querySelector(".choose-project").innerHTML = "";
+        justDropdowns(item.domElem.querySelector(".choose-project"));
+        // priorityLevelsColorCoating();
+        
+        // updating dropdowns selected value
+        item.domElem.querySelector(".choose-project").value = item.projectName;        
+    });
+}
+
+function displayingFiltered(items) {
+    removeAllChildNodes(tasksContainer);
+    if(items !== null) {
+        items.forEach(item=>tasksContainer.append(item.domElem));
+    }
+}
+
+function removeAllChildNodes(container) {
+    while (container.firstChild) container.removeChild(container.firstChild);
+}
+
+export { displayTasks, todos, displayAllTodoTasks, displayingFiltered };
+
+
+/**
+ * 
+ * 
+ function displayTasks(htmlFragment) {
+    // let tasksContainer = document.querySelector(".tasks-container");
     // priorityLevelsColorCoating();
     tasksContainer.append(htmlFragment);
     // console.log("added node: ", htmlFragment, htmlFragment.firstChild, htmlFragment.lastChild);
@@ -17,7 +61,7 @@ function displayTasks(htmlFragment) {
 }
 
 function displayAllTodoTasks() {
-    let tasksContainer = document.querySelector(".tasks-container");
+    // let tasksContainer = document.querySelector(".tasks-container");
     removeAllChildNodes(tasksContainer);
     console.log(todos.length, todos[todos.length - 1]);
     todos.forEach(item => {
@@ -34,20 +78,27 @@ function displayAllTodoTasks() {
         justDropdowns(item.domElem.querySelector(".choose-project"));
         // priorityLevelsColorCoating();
         
+        // updating dropdowns selected value
+        item.domElem.querySelector(".choose-project").value = item.projectName;
         // updating dropdowns selected value, at lleast trying to!!
-        justDropdownsWithSelected(item.domElem.querySelector(".choose-project"), item.domElem.querySelector(".choose-project").value);
+        // if(item.domElem.querySelector(".choose-project").value === item.projectName) {
+        //     item.domElem.querySelector(".choose-project").value = item.projectName
+        // }
+        // justDropdownsWithSelected(item.domElem.querySelector(".choose-project"), item.domElem.querySelector(".choose-project").value);
     });
     // priorityLevelsColorCoating();
 }
 
-function removeAllChildNodes(container) {
-    while (container.firstChild) container.removeChild(container.firstChild);
+function displayingFiltered(items) {
+    removeAllChildNodes(tasksContainer);
+    // items.forEach(item=>tasksContainer.append(item.domElem));
+    if(items !== null) {
+        items.forEach(item=>tasksContainer.append(item.domElem));
+    } 
+    // else {
+    //     displayAllTodoTasks();
+    // }
 }
-
-export { displayTasks, todos, displayAllTodoTasks };
-
-
-/**
  * 
  * 
  function displayTasks(htmlFragment) {

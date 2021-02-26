@@ -4,12 +4,14 @@ function showNames() {
     let dummyDiv = document.createElement("div");
     for(let i=0; i<existingProjects.length; i++) {
         let liDiv = document.createElement("div");
+        // liDiv.id = "li-div-"+i;
         liDiv.classList.add("li-div");
         let firstIcon = document.createElement("img");
         firstIcon.src = "../icons/menu-01.svg";
         firstIcon.classList.add("first-icon", "icons");
         let nameDiv = document.createElement("div");
         nameDiv.textContent = existingProjects[i];
+        nameDiv.id = "li-div-"+i;
         nameDiv.classList.add("li-text");
         let secondIcon = document.createElement("img");
         secondIcon.src = "../icons/menu-01.svg";
