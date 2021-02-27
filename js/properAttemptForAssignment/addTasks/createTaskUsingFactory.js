@@ -2,6 +2,7 @@
 import { existingProjects } from "../projectNames/showNames.js";
 import { priorities } from "../addTasks/prioritiyLevels.js";
 import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
+import {format} from "date-fns";
 let count = 0;
 let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     let obj = new Object();
@@ -24,9 +25,10 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
             <div class="task-text">${obj.title}</div>
         </div>
         <div class="due-date">
-            <sub class="time-stamp" id="task-dd">${obj.dueDate}</sub>
+            <input type="date" id="task-panel-dd">
+            <sub class="time-stamp" id="task-dd-${obj.id}">${obj.dueDate || format(new Date().setDate(new Date().getDate()+1), "'due date:'eeee") || "[due date]"}</sub>
         </div>
-        <div class=-"task-added">${obj.createdDate}</div>
+        <div class=-"task-added" id="task-added-${obj.id}">${obj.createdDate || format(new Date(), "'created at:'eeee") || "[created at]"}</div>
         <div class="task-project">
             <div class="priority-dd">
                 <select class="levels" id="levels-dd-${obj.id}">${

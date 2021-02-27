@@ -1,8 +1,8 @@
-import { startOfSecond } from "date-fns/fp";
+import { startOfSecond, format, parseISO, addDays, parse } from "date-fns/fp";
 import { todos } from "../showTasks/displayTodos.js";
-import {coloringPrioritiesFromDD} from "../priorityColors/colorCoating.js";
+import { coloringPrioritiesFromDD } from "../priorityColors/colorCoating.js";
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
-import {groupTodosByProjects, groupifyTasks} from "../groupTasks/byName.js";
+import { groupTodosByProjects, groupifyTasks } from "../groupTasks/byName.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => handleModification(evt));
@@ -10,21 +10,52 @@ function editTodos() {
 
 function handleModification(evt) {
     handleHighlightingCheckboxDiv(evt);
-    if(evt.target.id.startsWith("levels-dd")) handleColorCoatingPriority(evt);
-    if(evt.target.id.startsWith("choose-project")) handleProjectTodoTask(evt);
+    if (evt.target.id.startsWith("levels-dd")) handleColorCoatingPriority(evt);
+    if (evt.target.id.startsWith("choose-project")) handleProjectTodoTask(evt);
+    if (evt.target.id.startsWith("task-dd")) handleTaskDueDate(evt)
+}
+
+function handleTaskDueDate(evt) {
+    todos.forEach(item => {
+        // let taskDD = item.domElem.querySelector(".time-stamp");
+        let taskDD = item.domElem.querySelector(".due-date");
+        taskDD.addEventListener("click", evt => showDatepicker(evt));
+    });
+}
+
+function showDatepicker(evt) {
+    let datePicker = evt.target.parentNode.querySelector("input");
+    // console.log(evt.target, datePicker);
+    if (datePicker.style.display === "none") {
+        datePicker.style.display = "inline-block";
+        // datePicker.style.display = "block";
+        datePicker.addEventListener("input", evt => {
+            // console.log(datePicker.value, typeof datePicker.value, new Date(datePicker.value));
+            let result = parse(datePicker.value, "MM/dd/yyyy", new Date());
+            console.log("result:",result);
+            evt.target.parentNode.querySelector(".time-stamp").textContent = format(result, "eeee");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+datePicker.value;
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+format(new Date(datePicker.value), "eeee");
+            datePicker.style.display = "none";
+            datePicker.removeEventListener("click", showDatepicker);
+        });
+    } else {
+        datePicker.style.display = "none";
+        datePicker.removeEventListener("click", showDatepicker);
+    }
 }
 
 function handleProjectTodoTask(evt) {
     todos.forEach(item => {
-        let projectSelect = item.domElem.querySelector("#choose-project-"+item.id);
-        let getProjectName =  projectSelect.value;
+        let projectSelect = item.domElem.querySelector("#choose-project-" + item.id);
+        let getProjectName = projectSelect.value;
         item.projectName = getProjectName;
         // item.projectName = getProjectName || "Daily Chore";
         groupTodosByProjects();
     });
 }
 
-function handleColorCoatingPriority(evt)  {
+function handleColorCoatingPriority(evt) {
     let ddValue = evt.target.value;
     let divID = evt.target.id;
     // console.log(ddValue, divID);
@@ -70,6 +101,38 @@ export { editTodos }
 /**
  * 
  * 
+ function showDatepicker(evt) {
+    let datePicker = evt.target.parentNode.querySelector("input");
+    // console.log(evt.target, datePicker);
+    if (datePicker.style.display === "none") {
+        datePicker.style.display = "inline-block";
+        // datePicker.style.display = "block";
+        datePicker.addEventListener("input", evt => {
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = datePicker.value;
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date(datePicker.value), "Due Date:'eeee'");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(Date.parse(datePicker.value), "Due Date:'eeee'");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date().setDate(new Date(Date.parseISO(datePicker.value))), "Due Date:'eeee'");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = new Date(datePicker.value);
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date(datePicker.value).toString(), "'created at:'eeee");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date(parseISO(datePicker.value)), "'created at:'eeee");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date(datePicker.value), "yyyy-MM-dd");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format((parseISO(datePicker.value), "yyyy-MM-dd"), "eeee");
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = addDays(parseISO('2016-01-01'), 0);
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = addDays(new Date(parseISO(2016,01,01)), 0);
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = addDays(new Date(2016,01,01), 0);
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = format(new Date(Date.parse("01/01/2021")), "MMMM-d-yy");
+            evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+datePicker.value;
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+format(new Date(datePicker.value), "eeee");
+            datePicker.style.display = "none";
+            datePicker.removeEventListener("click", showDatepicker);
+        });
+    } else {
+        datePicker.style.display = "none";
+        datePicker.removeEventListener("click", showDatepicker);
+    }
+}
+ *
+ *
  function handleProjectTodoTask(evt) {
     let idCurated = evt.target.id.split("-")[2];
     // groupify = [];
@@ -93,7 +156,7 @@ function checkGroupify(id) {
     groupify.forEach(item => {
         if(item.taskID === id) {
             return false;
-        } 
+        }
         // else {
         //     return true;
         // }
@@ -101,23 +164,23 @@ function checkGroupify(id) {
     });
     return true;
 }
- * 
- * 
+ *
+ *
  function handleProjectTodoTask(evt) {
     let idCurated = evt.target.id.split("-")[2];
     // groupify = [];
     todos.forEach(item => {
         let itemProjectName = item.domElem.querySelector("#choose-project-"+item.id);
         let getProjectName =  itemProjectName.value;
-        
+
         let taskNode = itemProjectName.parentNode.parentNode.parentNode;
         let taskTitle = taskNode.querySelector(".task-text").textContent;
         groupify.push({projectName:getProjectName, taskTitle:taskTitle, taskID: idCurated})
         groupTodosByProjects(getProjectName, taskTitle, taskID);
     });
 }
- * 
- * 
+ *
+ *
  function handleProjectTodoTask(evt) {
     // console.log("changed!!");
     let idCurated = evt.target.id.split("-")[2];
@@ -131,7 +194,7 @@ function checkGroupify(id) {
         // itemProjectName.value = getProjectName;
         // console.log(itemProjectName);
         // let taskNode = item.domElem.querySelector("#todo-elem-"+item.id);
-        
+
         let taskNode = itemProjectName.parentNode.parentNode.parentNode;
         // console.log(taskNode);
         let taskTitle = taskNode.querySelector(".task-text").textContent;
@@ -140,8 +203,8 @@ function checkGroupify(id) {
 
     });
 }
- * 
- * 
+ *
+ *
  function handleProjectTodoTask(evt) {
     // console.log("changed!!");
     let idCurated = evt.target.id.split("-")[2];
@@ -153,8 +216,8 @@ function checkGroupify(id) {
         }
     });
 }
- * 
- * 
+ *
+ *
  function handleHighlightCheckboxDiv(evt) {
     // previously it wasn't pointing to seelected element because all id's were same and it used to matchees with first found match
     // and now after modifying our htmlFragment for each task for checklist-div id with id number appended after making it unique for DOM

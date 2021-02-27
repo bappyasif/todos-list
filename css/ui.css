@@ -299,7 +299,7 @@ select:focus, select:hover {outline: none; box-shadow: 0 0 1.1px transparent;}
 #calendar:hover, #due-date:hover, #priority:hover, #notes:hover {
     transform: scale(2);
 }
-#date-picker, #date-picker2 {
+#date-picker, #date-picker2, #task-panel-dd {
     width: 130px;
     align-self: center;
     margin: auto;
@@ -369,4 +369,9 @@ select:focus, select:hover {outline: none; box-shadow: 0 0 1.1px transparent;}
 .todo-elem {
     margin-bottom: 4px;
     border-bottom: 1.1px dotted white;
+}
+/* todo-elem for task dueDate */
+#task-panel-dd {
+    position: absolute;
+    display: none;
 }
