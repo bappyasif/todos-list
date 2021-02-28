@@ -26,7 +26,7 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
         </div>
         <div class="due-date">
             <input type="date" id="task-panel-dd">
-            <sub class="time-stamp" id="task-dd-${obj.id}">${obj.dueDate || format(new Date().setDate(new Date().getDate()+1), "'due date:'eeee") || "[due date]"}</sub>
+            <sub class="time-stamp" id="task-dd-${obj.id}">${format(new Date().setDate(new Date().getDate()+1), "MM-dd-yyyy': Due at'") || obj.dueDate+":" || format(new Date().setDate(new Date().getDate()+1), "'due date:'eeee") || "[due date]"}</sub>
         </div>
         <div class=-"task-added" id="task-added-${obj.id}">${obj.createdDate || format(new Date(), "'created at:'eeee") || "[created at]"}</div>
         <div class="task-project">

@@ -1,4 +1,5 @@
-import { startOfSecond, format, parseISO, addDays, parse } from "date-fns/fp";
+// import { startOfSecond, format, parseISO, addDays, parse } from "date-fns/fp";
+import { startOfSecond, format, parseISO, addDays, parse } from "date-fns";
 import { todos } from "../showTasks/displayTodos.js";
 import { coloringPrioritiesFromDD } from "../priorityColors/colorCoating.js";
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
@@ -30,12 +31,8 @@ function showDatepicker(evt) {
         datePicker.style.display = "inline-block";
         // datePicker.style.display = "block";
         datePicker.addEventListener("input", evt => {
-            // console.log(datePicker.value, typeof datePicker.value, new Date(datePicker.value));
-            let result = parse(datePicker.value, "MM/dd/yyyy", new Date());
-            console.log("result:",result);
-            evt.target.parentNode.querySelector(".time-stamp").textContent = format(result, "eeee");
-            // evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+datePicker.value;
-            // evt.target.parentNode.querySelector(".time-stamp").textContent = "Due Date:"+format(new Date(datePicker.value), "eeee");
+            let dateValue = format(parseISO(datePicker.value), "MM-dd-yyyy");
+            evt.target.parentNode.querySelector(".time-stamp").textContent = dateValue + ":" + format(parseISO(datePicker.value), "'Due_at:'eeee");
             datePicker.style.display = "none";
             datePicker.removeEventListener("click", showDatepicker);
         });
@@ -99,8 +96,34 @@ export { editTodos }
 //     });
 // }
 /**
- * 
- * 
+ *
+ *
+ function showDatepicker(evt) {
+    let datePicker = evt.target.parentNode.querySelector("input");
+    // console.log(evt.target, datePicker);
+    if (datePicker.style.display === "none") {
+        datePicker.style.display = "inline-block";
+        // datePicker.style.display = "block";
+        datePicker.addEventListener("input", evt => {
+            // console.log(datePicker.value, typeof datePicker.value, new Date(datePicker.value));
+            // let result = parse(datePicker.value, "MM/dd/yyyy", new Date());
+            // console.log("result:",result);
+
+            let dateValue = format(parseISO(datePicker.value), "MM-dd-yyyy");
+            // console.log("Date:", dateValue);
+
+            // evt.target.parentNode.querySelector(".time-stamp").textContent = datePicker.value +":\t"+ format(parseISO(datePicker.value), "'Due_at:'eeee");
+            evt.target.parentNode.querySelector(".time-stamp").textContent = dateValue +":"+ format(parseISO(datePicker.value), "'Due_at:'eeee");
+            datePicker.style.display = "none";
+            datePicker.removeEventListener("click", showDatepicker);
+        });
+    } else {
+        datePicker.style.display = "none";
+        datePicker.removeEventListener("click", showDatepicker);
+    }
+}
+ *
+ *
  function showDatepicker(evt) {
     let datePicker = evt.target.parentNode.querySelector("input");
     // console.log(evt.target, datePicker);
