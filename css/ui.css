@@ -83,6 +83,9 @@
     font-size: 20px;
     transition: all .2s ease-in-out;
 }
+.today:hover, .next-week:hover, .tomorrow:hover {
+    transform: scale(1.1);
+}
 /* .today {
     justify-content: center;
 } */

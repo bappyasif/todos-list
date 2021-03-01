@@ -2,6 +2,7 @@ import {showNames} from "../properAttemptForAssignment/projectNames/showNames.js
 import {showGroupifiedProjectTodos} from "../properAttemptForAssignment/groupTasks/byName.js";
 import {displayingFiltered, displayAllTodoTasks} from "../properAttemptForAssignment/showTasks/displayTodos.js";
 import {handleDateWiseGrouping} from "../properAttemptForAssignment/groupTasks/byDates.js";
+import {findTasksByName} from "../properAttemptForAssignment/searchTasks/byName.js";
 let projectsDiv = document.querySelector(".projects");
 
 function displayingProjects() {
@@ -10,6 +11,7 @@ function displayingProjects() {
     console.log(showNames());
     showTodosByProjects();
     handleDateWiseGrouping();
+    findTasksByName();
 }
 
 function showTodosByProjects() {

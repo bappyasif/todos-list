@@ -2,14 +2,14 @@
 import { existingProjects } from "../projectNames/showNames.js";
 import { priorities } from "../addTasks/prioritiyLevels.js";
 import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
-import {format} from "date-fns";
+import {format, addDays} from "date-fns";
 let count = 0;
 let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     let obj = new Object();
     let increaseCount = () => count++;
-    obj.title = title;
-    obj.createdDate = createdDate;
-    obj.dueDate = dueDate;
+    obj.title = title || "Default Title";
+    obj.createdDate = createdDate || format(new Date(), "MM-dd-yyyy");
+    obj.dueDate = dueDate || format(addDays(new Date(), 1), "MM-dd-yyyy");
     obj.priorityLevel = priorityLevel;
     obj.taskNote = taskNote;
     obj.id = increaseCount();
@@ -22,7 +22,7 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
             <label for="task-check-${obj.id}"></label>
         </div>
         <div class="task-name">
-            <div class="task-text">${obj.title}</div>
+            <div class="task-text">${obj.title || "Default Title"}</div>
         </div>
         <div class="due-date">
             <input type="date" id="task-panel-dd">

@@ -31,6 +31,7 @@ function displayAllTodoTasks() {
 }
 
 function displayingFiltered(items) {
+    // console.log("::",items);
     removeAllChildNodes(tasksContainer);
     if(items !== null) {
         items.forEach(item=>tasksContainer.append(item.domElem));

@@ -1,7 +1,9 @@
 import { todos } from "../showTasks/displayTodos.js";
-import { format, parseISO, sub } from "date-fns";
+import { format, parseISO, sub, addDays } from "date-fns";
 import { displayingFiltered } from "../showTasks/displayTodos.js";
 let tasks = [], filteredTasks = [], dateString;
+let panelTask = document.querySelector(".panel-text");
+let dateStamp = document.querySelector(".date-stamp");
 
 function handleDateWiseGrouping() {
     let dateTodays = document.querySelector(".today");
@@ -20,8 +22,17 @@ function showTasks(evt) {
     if (parentElement.classList.contains("next-week")) showNextWeeksTasks(evt);
 }
 
+function slipinDateAndText(dateString, dateText) {
+    panelTask.textContent = dateText;
+    dateStamp.textContent = dateString;
+}
+
 function showTodaysTodoTask(evt) {
     dateString = new Date();
+    // adding in tasks panel header for text and date for Days interval from side panel
+    let formatedString = format(dateString, "MMM-dd-yyyy' On:'-EEEE");
+    slipinDateAndText(formatedString, "Today");
+    // console.log(dateString);
     filterTasks(dateString, evt);
     filteringUtility("today");
     // console.log(tasks,filteredTasks);
@@ -30,6 +41,9 @@ function showTodaysTodoTask(evt) {
 
 function showTomorrowsTodoTask(evt) {
     dateString = new Date().setDate(new Date().getDate() + 1);
+    // adding in tasks panel header for text and date for Days interval from side panel
+    let formatedString = format(dateString, "MMM-dd-yyyy' On:'-EEEE");
+    slipinDateAndText(formatedString, "Tomorrow");
     // console.log(dateString);
     filterTasks(dateString, evt);
     filteringUtility("tomorrow");
@@ -39,6 +53,10 @@ function showTomorrowsTodoTask(evt) {
 
 function showNextWeeksTasks(evt) {
     dateString = new Date();
+    // adding in tasks panel header for text and date for Days interval from side panel
+    let formatedString = format(addDays(dateString, 7), "MMM-dd-yyyy' On:'-EEEE");
+    slipinDateAndText(formatedString, "Next Week");
+    // console.log(dateString);
     filterTasks(dateString, evt);
     filteringUtility("next_week");
     // console.log(tasks,filteredTasks);
