@@ -1,5 +1,7 @@
 import { existingProjects } from "../projectNames/showNames.js";
-import displayingProjects from "../init.js";
+// import displayingProjects from "../init.js";
+import {displayingProjects, displayingProjectsWithEvent} from "../init.js";
+import {displayAllTodoTasks} from "../showTasks/displayTodos.js";
 let inputElem = document.querySelector("#add-project");
 let addBtn = document.querySelector(".project-input button");
 
@@ -14,7 +16,10 @@ let handleAddNewProject = evt => {
         existingProjects.insert(4, newProject);
         console.log(existingProjects, newProject);
         inputElem.value = "";
-        displayingProjects();
+        // displayingProjects();
+        // displayingProjectsWithEvent(evt);
+        // this call will repaint all previously existed Todos
+        displayAllTodoTasks();
     }
     inputElem.style.display = "none";
     addBtn.style.display = "none";
@@ -24,8 +29,15 @@ let handleDisplayAddedProjects = evt => {
     if (inputElem.style.display === "none") {
         inputElem.style.display = "block";
         addBtn.style.display = "block";
-        addBtn.addEventListener("click", evt => handleAddNewProject(evt));
+        // addBtn.addEventListener("click", evt => handleAddNewProject(evt));
+        addBtn.addEventListener("click", evt => {
+            handleAddNewProject(evt);
+            // displayingProjectsWithEvent(handleAddNewProject(evt));
+            displayingProjectsWithEvent(handleAddNewProject(evt), evt);
+        });
         // displayingProjects();
+        // displayAllTodoTasks();
+        // displayingProjectsWithEvent(evt);
     } else {
         inputElem.style.display = "none";
         addBtn.style.display = "none";

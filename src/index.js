@@ -15,7 +15,8 @@
 // editDelete();
 
 /** For Assignment */
-import displayingProjects from "../js/properAttemptForAssignment/init.js";
+// import displayingProjects from "../js/properAttemptForAssignment/init.js";
+import {displayingProjects, readyGroupingsWiseDisplays} from "../js/properAttemptForAssignment/init.js";
 import {addingNewProjectName} from "../js/properAttemptForAssignment/projectNames/addProject.js";
 import {readyTodoTaskEntry} from "../js/properAttemptForAssignment/addTasks/initiateEntry.js";
 // import {displayAllTodoTasks, todos} from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
@@ -27,3 +28,4 @@ readyTodoTaskEntry();
 // displayAllTodoTasks();
 editTodos();
 // showProjectNamesDD();
+readyGroupingsWiseDisplays();

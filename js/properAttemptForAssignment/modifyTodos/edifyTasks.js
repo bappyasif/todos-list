@@ -1,6 +1,6 @@
 // import { startOfSecond, format, parseISO, addDays, parse } from "date-fns/fp";
 import { startOfSecond, format, parseISO, addDays, parse } from "date-fns";
-import { todos } from "../showTasks/displayTodos.js";
+import { todos, displayAllTodoTasks } from "../showTasks/displayTodos.js";
 import { coloringPrioritiesFromDD } from "../priorityColors/colorCoating.js";
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
 import { groupTodosByProjects, groupifyTasks } from "../groupTasks/byName.js";
@@ -9,14 +9,29 @@ function editTodos() {
     tasksContainer.addEventListener("click", evt => handleModification(evt));
 }
 
+// trying to target [domNodes] rather than DOM itself but this wouldn't budge!!
+// function editTodos() {
+//     displayAllTodoTasks();
+//     todos.forEach(item => {
+//         // let tasksContainer = item.domElem.querySelector(".tasks-container");
+//         let tasksContainer = item.domElem.querySelector(".todo-elem");
+//         console.log("??",tasksContainer)
+//         tasksContainer.addEventListener("click", evt => handleModification(evt));
+//     });
+// }
+
 function handleModification(evt) {
+    // displayAllTodoTasks();
     handleHighlightingCheckboxDiv(evt);
     if (evt.target.id.startsWith("levels-dd")) handleColorCoatingPriority(evt);
     if (evt.target.id.startsWith("choose-project")) handleProjectTodoTask(evt);
-    if (evt.target.id.startsWith("task-dd")) handleTaskDueDate(evt)
+    if (evt.target.id.startsWith("task-dd")) handleTaskDueDate(evt);
+    // if (evt.target.id.startsWith("task-dd")) handleTaskDueDate;
+    // displayAllTodoTasks();
 }
 
 function handleTaskDueDate(evt) {
+    // displayAllTodoTasks();
     todos.forEach(item => {
         // let taskDD = item.domElem.querySelector(".time-stamp");
         let taskDD = item.domElem.querySelector(".due-date");
@@ -42,12 +57,24 @@ function showDatepicker(evt) {
     }
 }
 
+// function handleProjectTodoTask() {
+//     todos.forEach(item => {
+//         let projectSelect = item.domElem.querySelector("#choose-project-" + item.id);
+//         let getProjectName = projectSelect.value;
+//         item.projectName = getProjectName;
+//         // item.projectName = getProjectName || "Daily Chore";
+//         // console.log("pN:", item.projectName);
+//         groupTodosByProjects();
+//     });
+// }
+
 function handleProjectTodoTask(evt) {
     todos.forEach(item => {
         let projectSelect = item.domElem.querySelector("#choose-project-" + item.id);
         let getProjectName = projectSelect.value;
         item.projectName = getProjectName;
         // item.projectName = getProjectName || "Daily Chore";
+        // console.log("pN:", item.projectName);
         groupTodosByProjects();
     });
 }
@@ -55,7 +82,14 @@ function handleProjectTodoTask(evt) {
 function handleColorCoatingPriority(evt) {
     let ddValue = evt.target.value;
     let divID = evt.target.id;
+    let taskID = divID.split("-")[2];
     // console.log(ddValue, divID);
+    todos.forEach(item => {
+        // console.log(item.id, taskID, Number(taskID), item.id === taskID, item.id === Number(taskID));
+        if(item.id === Number(taskID)) {
+            item.priorityLevel = ddValue;
+        }
+    });
     // coloringPrioritiesFromDD(ddValue);
     coloringPrioritiesFromDD(ddValue, divID);
 }
@@ -96,6 +130,15 @@ export { editTodos }
 //     });
 // }
 /**
+ * 
+ * 
+ // function handleColorCoatingPriority(evt) {
+//     let ddValue = evt.target.value;
+//     let divID = evt.target.id;
+//     // console.log(ddValue, divID);
+//     // coloringPrioritiesFromDD(ddValue);
+//     coloringPrioritiesFromDD(ddValue, divID);
+// }
  *
  *
  function showDatepicker(evt) {

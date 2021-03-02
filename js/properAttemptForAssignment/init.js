@@ -1,14 +1,36 @@
-import {showNames} from "../properAttemptForAssignment/projectNames/showNames.js";
-import {showGroupifiedProjectTodos} from "../properAttemptForAssignment/groupTasks/byName.js";
-import {displayingFiltered, displayAllTodoTasks} from "../properAttemptForAssignment/showTasks/displayTodos.js";
-import {handleDateWiseGrouping} from "../properAttemptForAssignment/groupTasks/byDates.js";
-import {findTasksByName} from "../properAttemptForAssignment/searchTasks/byName.js";
+import { showNames } from "../properAttemptForAssignment/projectNames/showNames.js";
+import { showGroupifiedProjectTodos } from "../properAttemptForAssignment/groupTasks/byName.js";
+import { displayingFiltered, displayAllTodoTasks } from "../properAttemptForAssignment/showTasks/displayTodos.js";
+import { handleDateWiseGrouping } from "../properAttemptForAssignment/groupTasks/byDates.js";
+import { findTasksByName } from "../properAttemptForAssignment/searchTasks/byName.js";
 let projectsDiv = document.querySelector(".projects");
 
 function displayingProjects() {
-    projectsDiv.childNodes.forEach(node=>node.remove());
+    projectsDiv.childNodes.forEach(node => node.remove());
+    // projectsDiv.childNodes.forEach(node => node.innerHTML = "");
     projectsDiv.append(showNames());
     console.log(showNames());
+    // showTodosByProjects();
+    // handleDateWiseGrouping();
+    // findTasksByName();
+}
+
+function displayingProjectsWithEvent(evtHandler,evt) {
+    // projectsDiv.childNodes.forEach(node => node.remove());
+    projectsDiv.childNodes.forEach(node => node.innerHTML = "");
+    let allNames = showNames();
+    // allNames.addEventListener("click",evtHandler(evt));
+    // allNames.addEventListener("click",evt => evtHandler(evt));
+    // allNames.addEventListener("click",evt => evtHandler);
+    allNames.childNodes.forEach(item => {
+        item.addEventListener("click", evt => evtHandler);
+    });
+    console.log("pr::", allNames);
+    projectsDiv.append(allNames);
+}
+
+function readyGroupingsWiseDisplays() {
+    displayAllTodoTasks();
     showTodosByProjects();
     handleDateWiseGrouping();
     findTasksByName();
@@ -24,7 +46,7 @@ function handleGroupedProjectsTask(evt) {
     let divText = evt.target.textContent;
     let filteredTasks = showGroupifiedProjectTodos(divText);
     // console.log("length:", filteredTasks.length);
-    if(filteredTasks.length !== 0) {
+    if (filteredTasks.length !== 0) {
         displayingFiltered(filteredTasks);
     } else {
         alert("no tasks added yet....");
@@ -32,11 +54,12 @@ function handleGroupedProjectsTask(evt) {
     }
 }
 
-export default displayingProjects;
+export {displayingProjects, readyGroupingsWiseDisplays, displayingProjectsWithEvent};
+// export default displayingProjects;
 
 /**
- * 
- * 
+ *
+ *
  function displayingProjects() {
     // let projectsDiv = document.querySelector(".projects");
     projectsDiv.childNodes.forEach(node=>node.remove());
@@ -69,8 +92,8 @@ function handleGroupedProjectsTask(evt) {
         displayAllTodoTasks()
     }
 }
- * 
- * 
+ *
+ *
  function displayingProjects() {
     let projectsDiv = document.querySelector(".projects");
     projectsDiv.childNodes.forEach(node=>node.remove());

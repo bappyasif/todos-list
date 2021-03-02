@@ -1,12 +1,14 @@
-import {todos} from "../showTasks/displayTodos.js";
+import {todos, displayAllTodoTasks} from "../showTasks/displayTodos.js";
 let groupifyTasks = [];
 let filteredTasks, uniqueArray = [];
 function groupTodosByProjects() {
+    // displayAllTodoTasks();
     todos.forEach(item => {
         console.log("[]",item.projectName);
         if(item.projectName !== null ) {
             let check = sanityCheck(item.id);
             if(check) groupifyTasks.push(item);
+            // console.log("gr:", groupifyTasks);
         }
     });
 }
@@ -25,7 +27,11 @@ function showGroupifiedProjectTodos(projectName) {
         });
     });
     // console.log("{}", uniqueArray);
-    filteredTasks = uniqueArray.filter(item => item.projectName === projectName);
+    // filteredTasks = uniqueArray.filter(item => item.projectName === projectName);
+    filteredTasks = uniqueArray.filter(item => {
+        console.log(item.projectName, projectName, item.projectName === projectName)
+        return item.projectName === projectName
+    });
     // console.log(filteredTasks, uniqueArray);
     // console.log("!!",filteredTasks, projectName, groupifyTasks);
     return filteredTasks;

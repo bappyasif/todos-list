@@ -23,20 +23,6 @@ function coloringPrioritiesFromDD(selectedDD, ID) {
     });
 }
 
-// function coloringPrioritiesFromDD(selectedDD) {
-//     todos.forEach(item => {
-//         let prColoringDiv = item.domElem.querySelector(".priority-level")
-//         colorCodes(selectedDD, prColoringDiv);
-//     });
-// }
-
-// function userSelectedPriotiyFromEntryTask() {
-//     todos.forEach(item => {
-//         let prColoringDiv = item.domElem.querySelector(".priority-level");
-
-//     })
-// }
-
 function colorCodes(taskPriority, priorityDiv) {
     switch(taskPriority) {
         case "Normal":
@@ -57,3 +43,21 @@ function colorCodes(taskPriority, priorityDiv) {
 }
 
 export {priorityLevelsColorCoating, coloringPrioritiesFromDD}
+
+/**
+ * 
+ * 
+ // function coloringPrioritiesFromDD(selectedDD) {
+//     todos.forEach(item => {
+//         let prColoringDiv = item.domElem.querySelector(".priority-level")
+//         colorCodes(selectedDD, prColoringDiv);
+//     });
+// }
+
+// function userSelectedPriotiyFromEntryTask() {
+//     todos.forEach(item => {
+//         let prColoringDiv = item.domElem.querySelector(".priority-level");
+
+//     })
+// }
+ */

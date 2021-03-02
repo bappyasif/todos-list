@@ -1,6 +1,6 @@
 import { todos } from "../showTasks/displayTodos.js";
 import { format, parseISO, sub, addDays } from "date-fns";
-import { displayingFiltered } from "../showTasks/displayTodos.js";
+import { displayingFiltered, displayAllTodoTasks } from "../showTasks/displayTodos.js";
 let tasks = [], filteredTasks = [], dateString;
 let panelTask = document.querySelector(".panel-text");
 let dateStamp = document.querySelector(".date-stamp");
@@ -12,6 +12,7 @@ function handleDateWiseGrouping() {
     dateTodays.addEventListener("click", showTasks);
     dateTomorrow.addEventListener("click", showTasks);
     dateNextWeek.addEventListener("click", showTasks);
+    // displayAllTodoTasks();
 }
 
 function showTasks(evt) {
@@ -20,6 +21,7 @@ function showTasks(evt) {
     if (parentElement.classList.contains("today")) showTodaysTodoTask(evt);
     if (parentElement.classList.contains("tomorrow")) showTomorrowsTodoTask(evt);
     if (parentElement.classList.contains("next-week")) showNextWeeksTasks(evt);
+    // displayAllTodoTasks();
 }
 
 function slipinDateAndText(dateString, dateText) {
