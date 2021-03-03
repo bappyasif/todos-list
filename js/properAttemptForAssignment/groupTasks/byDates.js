@@ -1,25 +1,32 @@
 import { todos } from "../showTasks/displayTodos.js";
 import { format, parseISO, sub, addDays } from "date-fns";
-import { displayingFiltered } from "../showTasks/displayTodos.js";
+import { displayingFiltered, displayAllTodoTasks } from "../showTasks/displayTodos.js";
 let tasks = [], filteredTasks = [], dateString;
 let panelTask = document.querySelector(".panel-text");
 let dateStamp = document.querySelector(".date-stamp");
 
 function handleDateWiseGrouping() {
+    // filteredTasks = [];
     let dateTodays = document.querySelector(".today");
     let dateTomorrow = document.querySelector(".tomorrow");
     let dateNextWeek = document.querySelector(".next-week");
     dateTodays.addEventListener("click", showTasks);
     dateTomorrow.addEventListener("click", showTasks);
     dateNextWeek.addEventListener("click", showTasks);
+    // displayAllTodoTasks();
+    // filteredTasks = [];
 }
 
 function showTasks(evt) {
     console.log("here!!", evt.target);
     let parentElement = evt.target.parentNode;
+    // filteredTasks = [];
+    // keeping an empty array so that each time it refreshes before loading with data from [todos]
+    tasks = [];
     if (parentElement.classList.contains("today")) showTodaysTodoTask(evt);
     if (parentElement.classList.contains("tomorrow")) showTomorrowsTodoTask(evt);
     if (parentElement.classList.contains("next-week")) showNextWeeksTasks(evt);
+    // displayAllTodoTasks();
 }
 
 function slipinDateAndText(dateString, dateText) {
@@ -28,6 +35,7 @@ function slipinDateAndText(dateString, dateText) {
 }
 
 function showTodaysTodoTask(evt) {
+    // filteredTasks = [];
     dateString = new Date();
     // adding in tasks panel header for text and date for Days interval from side panel
     let formatedString = format(dateString, "MMM-dd-yyyy' On:'-EEEE");
@@ -58,6 +66,7 @@ function showNextWeeksTasks(evt) {
     slipinDateAndText(formatedString, "Next Week");
     // console.log(dateString);
     filterTasks(dateString, evt);
+    // filteredTasks = [];
     filteringUtility("next_week");
     // console.log(tasks,filteredTasks);
     displayingFiltered(filteredTasks);
@@ -67,10 +76,11 @@ function filteringUtility(filterString) {
     // tasks.filter(item=> item)
     tasks.forEach(item => {
         for (let key in item) {
-            console.log(key, item[key]);
+            // console.log(key, item[key]);
             if (key === filterString) {
-                filteredTasks = [];
+                // filteredTasks = [];
                 filteredTasks.push(item[filterString]);
+                console.log("Filtered::", filteredTasks);
             }
         }
     });
@@ -84,13 +94,41 @@ function filterTasks(dateString, evt) {
         // console.log(dateCheck, formatCheck, dateCheck === formatCheck);
         let checkWeek = format(sub(new Date(dateCheck), { days: 7 }), "MM-dd-yyyy");
         // console.log(checkWeek, checkWeek >= formatCheck);
+
+        // previously it wasn't updating for [todos] element rather only for [tasks], which was resulting in not updating correct Todo List per Date Group wise
+        // now as it's been also recorde after each change, its getting recorded in [todos] as well, so filtering happens effeciently as expected
+        item.dueDate = formatCheck;
+        // also clearing out [filteredTasks] so that each event gets a fresh array to begin with and render tasks in it
+        filteredTasks = [];
+        // tasks = [];
         if (checkWeek >= formatCheck) {
-            if (evt.target.parentNode.classList.contains("next-week")) tasks.push({ next_week: item });
+            if (evt.target.parentNode.classList.contains("next-week")) {
+                // filteredTasks = [];
+                // tasks = [];
+                // item.dueDate = formatCheck;
+                tasks.push({ next_week: item });
+            };
         } else if (dateCheck === formatCheck) {
             //     // console.log(evt.target.parentNode);
-            if (evt.target.parentNode.classList.contains("today")) tasks.push({ today: item });
-            else if (evt.target.parentNode.classList.contains("tomorrow")) tasks.push({ tomorrow: item });
+            if (evt.target.parentNode.classList.contains("today")) {
+                // item.dueDate = formatCheck;
+                // tasks = [];
+                tasks.push({ today: item });
+            }
+            else if (evt.target.parentNode.classList.contains("tomorrow")) {
+                // item.dueDate = formatCheck;
+                // tasks = [];
+                tasks.push({ tomorrow: item });
+            }
         }
+
+        // if (checkWeek >= formatCheck) {
+        //     if (evt.target.parentNode.classList.contains("next-week")) tasks.push({ next_week: item });
+        // } else if (dateCheck === formatCheck) {
+        //     //     // console.log(evt.target.parentNode);
+        //     if (evt.target.parentNode.classList.contains("today")) tasks.push({ today: item });
+        //     else if (evt.target.parentNode.classList.contains("tomorrow")) tasks.push({ tomorrow: item });
+        // }
     });
 }
 

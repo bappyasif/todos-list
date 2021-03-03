@@ -2,7 +2,7 @@
 import { existingProjects } from "../projectNames/showNames.js";
 import { priorities } from "../addTasks/prioritiyLevels.js";
 import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
-import {format, addDays} from "date-fns";
+import { format, addDays } from "date-fns";
 let count = 0;
 let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     let obj = new Object();
@@ -26,7 +26,7 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
         </div>
         <div class="due-date">
             <input type="date" id="task-panel-dd">
-            <sub class="time-stamp" id="task-dd-${obj.id}">${format(new Date().setDate(new Date().getDate()+1), "MM-dd-yyyy': Due at'") || obj.dueDate+":" || format(new Date().setDate(new Date().getDate()+1), "'due date:'eeee") || "[due date]"}</sub>
+            <sub class="time-stamp" id="task-dd-${obj.id}">${format(new Date().setDate(new Date().getDate() + 1), "MM-dd-yyyy': Due at'") || obj.dueDate + ":" || format(new Date().setDate(new Date().getDate() + 1), "'due date:'eeee") || "[due date]"}</sub>
         </div>
         <div class=-"task-added" id="task-added-${obj.id}">${obj.createdDate || format(new Date(), "'created at:'eeee") || "[created at]"}</div>
         <div class="task-project">
@@ -35,8 +35,7 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
         // priorities.map(item=>`<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`)
         priorities.map(item => {
             return `<option ${item === obj.priorityLevel ? "selected" : ""} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`;
-        }
-        )
+        })
         }</select>
             </div>
             <div class="priority-level">
@@ -68,18 +67,18 @@ export { createTask }
 
 
 /**
- * 
- * 
+ *
+ *
  <select class="levels" id="levels-dd-${obj.id}">${
         // priorities.map(item=>`<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`)
         priorities.map(item => {
             return `<option ${item === obj.priorityLevel ? "selected" : ""} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
-            
+
             // return `<option ${item === obj.priorityLevel ? "selected" : false} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
             // return `<option value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
             // console.log(item===obj.priorityLevel);
             // return `<option selected="${item === obj.priorityLevel ? true : false}" value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
-            
+
             // if (item === obj.priorityLevel) {
             //     `<option selected=${true} value="${item}" class="${item.toLocaleLowerCase()}">${item}</option>`
             // } else {

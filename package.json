@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "an attempt for TodoList",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debugMode": "npx webpack --watch --mode 'development' --devtool source-map"
   },
   "repository": {
     "type": "git",
