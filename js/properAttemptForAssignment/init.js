@@ -1,6 +1,6 @@
 import { showNames } from "../properAttemptForAssignment/projectNames/showNames.js";
 import { showGroupifiedProjectTodos } from "../properAttemptForAssignment/groupTasks/byName.js";
-import { displayingFiltered, displayAllTodoTasks } from "../properAttemptForAssignment/showTasks/displayTodos.js";
+import { displayingFiltered, displayAllTodoTasks, todos } from "../properAttemptForAssignment/showTasks/displayTodos.js";
 import { handleDateWiseGrouping } from "../properAttemptForAssignment/groupTasks/byDates.js";
 import { findTasksByName } from "../properAttemptForAssignment/searchTasks/byName.js";
 let projectsDiv = document.querySelector(".projects");
@@ -27,7 +27,11 @@ function readyGroupingsWiseDisplays() {
 
 function showTodosByProjects() {
     projectsDiv.firstChild.childNodes.forEach(item => {
-        item.addEventListener("click", evt => handleGroupedProjectsTask(evt));
+        // this was making it to call twice,, peerhaps for delegation maybe
+        // item.addEventListener("click", evt => handleGroupedProjectsTask(evt));
+        
+        // this solved it that issue of getting called twice, just needed to pass on function name rather than delegate it for this event
+        item.addEventListener("click", handleGroupedProjectsTask);
     });
 }
 
@@ -35,7 +39,7 @@ function handleGroupedProjectsTask(evt) {
     let divText = evt.target.textContent;
     let filteredTasks = showGroupifiedProjectTodos(divText);
     // console.log("length:", filteredTasks.length);
-    if (filteredTasks.length !== 0) {
+    if (todos.length !== 0 && filteredTasks.length !== 0) {
         displayingFiltered(filteredTasks);
     } else {
         alert("no tasks added yet....");
