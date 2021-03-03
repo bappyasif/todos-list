@@ -1,3 +1,4 @@
+import {handleGroupedProjectsTask} from "../init.js";
 let existingProjects = ["Daily Chores", "Home", "Health", "Work"];
 
 function showNames() {
@@ -17,6 +18,7 @@ function showNames() {
         secondIcon.src = "../icons/menu-01.svg";
         secondIcon.classList.add("ending-icon", "icons");
         liDiv.append(firstIcon,nameDiv,secondIcon);
+        liDiv.addEventListener("click", handleGroupedProjectsTask);
         dummyDiv.append(liDiv);
     }
     return dummyDiv;

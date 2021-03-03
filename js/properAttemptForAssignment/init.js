@@ -5,30 +5,19 @@ import { handleDateWiseGrouping } from "../properAttemptForAssignment/groupTasks
 import { findTasksByName } from "../properAttemptForAssignment/searchTasks/byName.js";
 let projectsDiv = document.querySelector(".projects");
 
+/**
+ * this will repaint entire Project Names List into DOM each time a new Names get added
+ */
 function displayingProjects() {
     projectsDiv.childNodes.forEach(node => node.remove());
     // projectsDiv.childNodes.forEach(node => node.innerHTML = "");
     projectsDiv.append(showNames());
-    console.log(showNames());
-    // showTodosByProjects();
-    // handleDateWiseGrouping();
-    // findTasksByName();
+    // console.log(showNames());
 }
 
-function displayingProjectsWithEvent(evtHandler,evt) {
-    // projectsDiv.childNodes.forEach(node => node.remove());
-    projectsDiv.childNodes.forEach(node => node.innerHTML = "");
-    let allNames = showNames();
-    // allNames.addEventListener("click",evtHandler(evt));
-    // allNames.addEventListener("click",evt => evtHandler(evt));
-    // allNames.addEventListener("click",evt => evtHandler);
-    allNames.childNodes.forEach(item => {
-        item.addEventListener("click", evt => evtHandler);
-    });
-    console.log("pr::", allNames);
-    projectsDiv.append(allNames);
-}
-
+/**
+ * all grouped wise Displays callled here
+ */
 function readyGroupingsWiseDisplays() {
     displayAllTodoTasks();
     showTodosByProjects();
@@ -54,10 +43,53 @@ function handleGroupedProjectsTask(evt) {
     }
 }
 
-export {displayingProjects, readyGroupingsWiseDisplays, displayingProjectsWithEvent};
+export {displayingProjects, readyGroupingsWiseDisplays, handleGroupedProjectsTask};
+// export {displayingProjects, readyGroupingsWiseDisplays, displayingProjectsWithEvent, addToProjectsDiv, handleGroupedProjectsTask};
 // export default displayingProjects;
 
 /**
+ * 
+ * 
+// this will repaint entire Project Names List into DOM each time a new Names get added
+ function displayingProjects() {
+    projectsDiv.childNodes.forEach(node => node.remove());
+    // projectsDiv.childNodes.forEach(node => node.innerHTML = "");
+    projectsDiv.append(showNames());
+    // console.log(showNames());
+}
+
+function addToProjectsDiv(itemDiv) {
+    projectsDiv.append(itemDiv);
+}
+// this is a new alterntive function that I'm trying to use to attach an event Listener to Project Names after a new Names gets added into that list
+// currently when a new name gets added, entire div loses it's EventListeners for some reason I can't yet comprehend why is that.
+function displayingProjectsWithEvent(evtHandler,evt) {
+    // projectsDiv.childNodes.forEach(node => node.remove());
+    projectsDiv.childNodes.forEach(node => node.innerHTML = "");
+    let allNames = showNames();
+    // allNames.addEventListener("click",evtHandler(evt));
+    // allNames.addEventListener("click",evt => evtHandler(evt));
+    // allNames.addEventListener("click",evt => evtHandler);
+    // allNames.childNodes.forEach(item => {
+    //     item.addEventListener("click", evt => evtHandler);
+    // });
+    allNames.childNodes.forEach(item => {
+        item.addEventListener("click", function() {evtHandler});
+    });
+    console.log("pr::", allNames);
+    projectsDiv.append(allNames);
+}
+ * 
+ * 
+ function displayingProjects() {
+    projectsDiv.childNodes.forEach(node => node.remove());
+    // projectsDiv.childNodes.forEach(node => node.innerHTML = "");
+    projectsDiv.append(showNames());
+    console.log(showNames());
+    // showTodosByProjects();
+    // handleDateWiseGrouping();
+    // findTasksByName();
+}
  *
  *
  function displayingProjects() {

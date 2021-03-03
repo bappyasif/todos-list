@@ -24,7 +24,7 @@ function handleCancel(evt) {
 }
 
 function showPanel() {
-    if (entryTask.style.display === "none") {
+    if (entryTask.style.display !== "block") {
         entryTask.style.display = "block";
         // entryTask.classList.remove("sliding-out");
         addTodo.addEventListener("click", addingTodo);
