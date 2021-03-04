@@ -6,7 +6,8 @@ let panelTask = document.querySelector(".panel-text");
 let dateStamp = document.querySelector(".date-stamp");
 
 function handleDateWiseGrouping() {
-    // filteredTasks = [];
+    filteredTasks = [];
+    tasks = [];
     let dateTodays = document.querySelector(".today");
     let dateTomorrow = document.querySelector(".tomorrow");
     let dateNextWeek = document.querySelector(".next-week");
@@ -45,6 +46,8 @@ function showTodaysTodoTask(evt) {
     filteringUtility("today");
     // console.log(tasks,filteredTasks);
     displayingFiltered(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function showTomorrowsTodoTask(evt) {
@@ -57,6 +60,8 @@ function showTomorrowsTodoTask(evt) {
     filteringUtility("tomorrow");
     // console.log(tasks,filteredTasks);
     displayingFiltered(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function showNextWeeksTasks(evt) {
@@ -70,9 +75,58 @@ function showNextWeeksTasks(evt) {
     filteringUtility("next_week");
     // console.log(tasks,filteredTasks);
     displayingFiltered(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function filteringUtility(filterString) {
+    tasks.forEach(item => {
+        for (let key in item) {
+            if (key === filterString) {
+                filteredTasks.push(item[filterString]);
+                console.log("Filtered::", filteredTasks);
+            }
+        }
+    });
+}
+
+function filterTasks(dateString, evt) {
+    todos.forEach(item => {
+        let dueDate = item.domElem.querySelector("#task-dd-" + item.id);
+        let dateCheck = dueDate.textContent.split(":")[0];
+        let formatCheck = format(dateString, "MM-dd-yyyy");
+        // console.log(dateCheck, formatCheck, dateCheck === formatCheck);
+        let checkWeek = format(sub(new Date(dateCheck), { days: 7 }), "MM-dd-yyyy");
+        // console.log(checkWeek, checkWeek >= formatCheck);
+
+        // previously it wasn't updating for [todos] element rather only for [tasks], which was resulting in not updating correct Todo List per Date Group wise
+        // now as it's been also recorde after each change, its getting recorded in [todos] as well, so filtering happens effeciently as expected
+        item.dueDate = formatCheck;
+        // also clearing out [filteredTasks] so that each event gets a fresh array to begin with and render tasks in it
+        filteredTasks = [];
+        // tasks = [];
+        if (checkWeek >= formatCheck) {
+            if (evt.target.parentNode.classList.contains("next-week")) {
+                tasks.push({ next_week: item });
+            };
+        } else if (dateCheck === formatCheck) {
+            //     // console.log(evt.target.parentNode);
+            if (evt.target.parentNode.classList.contains("today")) {
+                tasks.push({ today: item });
+            } else if (evt.target.parentNode.classList.contains("tomorrow")) {
+                tasks.push({ tomorrow: item });
+            }
+        }
+    });
+}
+
+// export { handleDateWiseGrouping }
+export { handleDateWiseGrouping, slipinDateAndText }
+
+/**
+ * 
+ * 
+ function filteringUtility(filterString) {
     // tasks.filter(item=> item)
     tasks.forEach(item => {
         for (let key in item) {
@@ -85,8 +139,9 @@ function filteringUtility(filterString) {
         }
     });
 }
-
-function filterTasks(dateString, evt) {
+ * 
+ * 
+ function filterTasks(dateString, evt) {
     todos.forEach(item => {
         let dueDate = item.domElem.querySelector("#task-dd-" + item.id);
         let dateCheck = dueDate.textContent.split(":")[0];
@@ -131,10 +186,6 @@ function filterTasks(dateString, evt) {
         // }
     });
 }
-
-export { handleDateWiseGrouping }
-
-/**
  *
  *
  function filterTasks(dateString, evt) {

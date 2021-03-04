@@ -1,4 +1,4 @@
-import {todos, displayAllTodoTasks} from "../showTasks/displayTodos.js";
+import {todos, displayAllTodoTasks, displayingFiltered} from "../showTasks/displayTodos.js";
 let groupifyTasks = [];
 let filteredTasks, uniqueArray = [];
 function groupTodosByProjects() {
@@ -37,7 +37,22 @@ function showGroupifiedProjectTodos(projectName) {
     return filteredTasks;
 }
 
-export {groupTodosByProjects, groupifyTasks, showGroupifiedProjectTodos, uniqueArray, filteredTasks}
+// it runs after a task is removed from list, it tries to repain all existing filtered items after deletion
+function afterDeleteFromProjects(id, projectName) {
+    console.log("b:",filteredTasks);
+    // filteredTasks = filteredTasks.filter(item => item.id !== id);
+    // runnig this function so that filters has values, as it throwed exception for it
+    showGroupifiedProjectTodos(projectName);
+    // let revisedFiltered = filteredTasks.filter(item => item.id !== id);
+    filteredTasks = filteredTasks.filter(item => item.id !== id);
+    console.log("a:",filteredTasks);
+    // console.log("a:",filteredTasks, revisedFiltered);
+    // displayAllTodoTasks();
+    displayingFiltered(filteredTasks);
+    // displayingFiltered(revisedFiltered);
+}
+
+export {groupTodosByProjects, groupifyTasks, showGroupifiedProjectTodos, uniqueArray, filteredTasks, afterDeleteFromProjects}
 
 /**
  * 
