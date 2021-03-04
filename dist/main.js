@@ -34,7 +34,8 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     obj.id = increaseCount();
     obj.prjDD = _projectNames_showNames_js__WEBPACK_IMPORTED_MODULE_0__.existingProjects;
     obj.getDOM = `<div class="tasks-container">
-    <div class="todo-elem" id="todo-elem-"${obj.id}>
+    <div class="todo-elem" id="todo-elem-${obj.id}">
+        <div class="delete-div" style="display:none;">Delete Task <span id="del-icon">X</span></div>
         <div class="task-info">
         <div class="checklist-div">
             <input type="checkbox" id="task-check-${obj.id}">
@@ -634,7 +635,8 @@ function getPrioritySelectedValue() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "handleDateWiseGrouping": () => (/* binding */ handleDateWiseGrouping)
+/* harmony export */   "handleDateWiseGrouping": () => (/* binding */ handleDateWiseGrouping),
+/* harmony export */   "slipinDateAndText": () => (/* binding */ slipinDateAndText)
 /* harmony export */ });
 /* harmony import */ var _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../showTasks/displayTodos.js */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
@@ -648,7 +650,8 @@ let panelTask = document.querySelector(".panel-text");
 let dateStamp = document.querySelector(".date-stamp");
 
 function handleDateWiseGrouping() {
-    // filteredTasks = [];
+    filteredTasks = [];
+    tasks = [];
     let dateTodays = document.querySelector(".today");
     let dateTomorrow = document.querySelector(".tomorrow");
     let dateNextWeek = document.querySelector(".next-week");
@@ -687,6 +690,8 @@ function showTodaysTodoTask(evt) {
     filteringUtility("today");
     // console.log(tasks,filteredTasks);
     (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayingFiltered)(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function showTomorrowsTodoTask(evt) {
@@ -699,6 +704,8 @@ function showTomorrowsTodoTask(evt) {
     filteringUtility("tomorrow");
     // console.log(tasks,filteredTasks);
     (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayingFiltered)(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function showNextWeeksTasks(evt) {
@@ -712,15 +719,14 @@ function showNextWeeksTasks(evt) {
     filteringUtility("next_week");
     // console.log(tasks,filteredTasks);
     (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayingFiltered)(filteredTasks);
+    // just making sure after showing current filtered tasks array gets cleaned up so that when delete functionality kicks in, it doesn't keep older elements in it even though they were deleted
+    filteredTasks = [];
 }
 
 function filteringUtility(filterString) {
-    // tasks.filter(item=> item)
     tasks.forEach(item => {
         for (let key in item) {
-            // console.log(key, item[key]);
             if (key === filterString) {
-                // filteredTasks = [];
                 filteredTasks.push(item[filterString]);
                 console.log("Filtered::", filteredTasks);
             }
@@ -735,6 +741,57 @@ function filterTasks(dateString, evt) {
         let formatCheck = (0,date_fns__WEBPACK_IMPORTED_MODULE_1__.default)(dateString, "MM-dd-yyyy");
         // console.log(dateCheck, formatCheck, dateCheck === formatCheck);
         let checkWeek = (0,date_fns__WEBPACK_IMPORTED_MODULE_1__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_3__.default)(new Date(dateCheck), { days: 7 }), "MM-dd-yyyy");
+        // console.log(checkWeek, checkWeek >= formatCheck);
+
+        // previously it wasn't updating for [todos] element rather only for [tasks], which was resulting in not updating correct Todo List per Date Group wise
+        // now as it's been also recorde after each change, its getting recorded in [todos] as well, so filtering happens effeciently as expected
+        item.dueDate = formatCheck;
+        // also clearing out [filteredTasks] so that each event gets a fresh array to begin with and render tasks in it
+        filteredTasks = [];
+        // tasks = [];
+        if (checkWeek >= formatCheck) {
+            if (evt.target.parentNode.classList.contains("next-week")) {
+                tasks.push({ next_week: item });
+            };
+        } else if (dateCheck === formatCheck) {
+            //     // console.log(evt.target.parentNode);
+            if (evt.target.parentNode.classList.contains("today")) {
+                tasks.push({ today: item });
+            } else if (evt.target.parentNode.classList.contains("tomorrow")) {
+                tasks.push({ tomorrow: item });
+            }
+        }
+    });
+}
+
+// export { handleDateWiseGrouping }
+
+
+/**
+ * 
+ * 
+ function filteringUtility(filterString) {
+    // tasks.filter(item=> item)
+    tasks.forEach(item => {
+        for (let key in item) {
+            // console.log(key, item[key]);
+            if (key === filterString) {
+                // filteredTasks = [];
+                filteredTasks.push(item[filterString]);
+                console.log("Filtered::", filteredTasks);
+            }
+        }
+    });
+}
+ * 
+ * 
+ function filterTasks(dateString, evt) {
+    todos.forEach(item => {
+        let dueDate = item.domElem.querySelector("#task-dd-" + item.id);
+        let dateCheck = dueDate.textContent.split(":")[0];
+        let formatCheck = format(dateString, "MM-dd-yyyy");
+        // console.log(dateCheck, formatCheck, dateCheck === formatCheck);
+        let checkWeek = format(sub(new Date(dateCheck), { days: 7 }), "MM-dd-yyyy");
         // console.log(checkWeek, checkWeek >= formatCheck);
 
         // previously it wasn't updating for [todos] element rather only for [tasks], which was resulting in not updating correct Todo List per Date Group wise
@@ -773,10 +830,6 @@ function filterTasks(dateString, evt) {
         // }
     });
 }
-
-
-
-/**
  *
  *
  function filterTasks(dateString, evt) {
@@ -871,7 +924,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "groupifyTasks": () => (/* binding */ groupifyTasks),
 /* harmony export */   "showGroupifiedProjectTodos": () => (/* binding */ showGroupifiedProjectTodos),
 /* harmony export */   "uniqueArray": () => (/* binding */ uniqueArray),
-/* harmony export */   "filteredTasks": () => (/* binding */ filteredTasks)
+/* harmony export */   "filteredTasks": () => (/* binding */ filteredTasks),
+/* harmony export */   "afterDeleteFromProjects": () => (/* binding */ afterDeleteFromProjects)
 /* harmony export */ });
 /* harmony import */ var _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../showTasks/displayTodos.js */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
 
@@ -911,6 +965,21 @@ function showGroupifiedProjectTodos(projectName) {
     // console.log(filteredTasks, uniqueArray);
     // console.log("!!",filteredTasks, projectName, groupifyTasks);
     return filteredTasks;
+}
+
+// it runs after a task is removed from list, it tries to repain all existing filtered items after deletion
+function afterDeleteFromProjects(id, projectName) {
+    console.log("b:",filteredTasks);
+    // filteredTasks = filteredTasks.filter(item => item.id !== id);
+    // runnig this function so that filters has values, as it throwed exception for it
+    showGroupifiedProjectTodos(projectName);
+    // let revisedFiltered = filteredTasks.filter(item => item.id !== id);
+    filteredTasks = filteredTasks.filter(item => item.id !== id);
+    console.log("a:",filteredTasks);
+    // console.log("a:",filteredTasks, revisedFiltered);
+    // displayAllTodoTasks();
+    (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayingFiltered)(filteredTasks);
+    // displayingFiltered(revisedFiltered);
 }
 
 
@@ -1104,10 +1173,13 @@ function handleGroupedProjectsTask(evt) {
     let filteredTasks = (0,_properAttemptForAssignment_groupTasks_byName_js__WEBPACK_IMPORTED_MODULE_1__.showGroupifiedProjectTodos)(divText);
     // console.log("length:", filteredTasks.length);
     if (_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_2__.todos.length !== 0 && filteredTasks.length !== 0) {
+        // Tasks Panel Header Captioning
+        (0,_properAttemptForAssignment_groupTasks_byDates_js__WEBPACK_IMPORTED_MODULE_3__.slipinDateAndText)("", divText);
+        // displaying tasks after filtering by Project Names from List
         (0,_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_2__.displayingFiltered)(filteredTasks);
     } else {
         alert("no tasks added yet....");
-        (0,_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_2__.displayAllTodoTasks)()
+        (0,_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_2__.displayAllTodoTasks)();
     }
 }
 
@@ -1214,16 +1286,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "editTodos": () => (/* binding */ editTodos)
 /* harmony export */ });
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parseISO/index.js");
 /* harmony import */ var _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../showTasks/displayTodos.js */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
 /* harmony import */ var _priorityColors_colorCoating_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../priorityColors/colorCoating.js */ "./js/properAttemptForAssignment/priorityColors/colorCoating.js");
 /* harmony import */ var _groupTasks_byName_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../groupTasks/byName.js */ "./js/properAttemptForAssignment/groupTasks/byName.js");
+/* harmony import */ var _removeTasks_showDelete_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../removeTasks/showDelete.js */ "./js/properAttemptForAssignment/removeTasks/showDelete.js");
 // import { startOfSecond, format, parseISO, addDays, parse } from "date-fns/fp";
 
 
 
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
+
 
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
@@ -1267,8 +1341,8 @@ function showDatepicker(evt) {
         datePicker.style.display = "inline-block";
         // datePicker.style.display = "block";
         datePicker.addEventListener("input", evt => {
-            let dateValue = (0,date_fns__WEBPACK_IMPORTED_MODULE_3__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_4__.default)(datePicker.value), "MM-dd-yyyy");
-            evt.target.parentNode.querySelector(".time-stamp").textContent = dateValue + ":" + (0,date_fns__WEBPACK_IMPORTED_MODULE_3__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_4__.default)(datePicker.value), "'Due_at:'eeee");
+            let dateValue = (0,date_fns__WEBPACK_IMPORTED_MODULE_4__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_5__.default)(datePicker.value), "MM-dd-yyyy");
+            evt.target.parentNode.querySelector(".time-stamp").textContent = dateValue + ":" + (0,date_fns__WEBPACK_IMPORTED_MODULE_4__.default)((0,date_fns__WEBPACK_IMPORTED_MODULE_5__.default)(datePicker.value), "'Due_at:'eeee");
             datePicker.style.display = "none";
             datePicker.removeEventListener("click", showDatepicker);
         });
@@ -1323,10 +1397,13 @@ function handleHighlightingCheckboxDiv(evt) {
             evt.target.parentNode.classList.add("highlight-check");
             // targeting .todo-elem
             evt.target.parentNode.parentNode.parentNode.classList.add("strike-through");
+            // showing Delete After Strikethrough
+            (0,_removeTasks_showDelete_js__WEBPACK_IMPORTED_MODULE_3__.showDelete)(evt);
         } else {
             evt.target.parentNode.classList.remove("highlight-check");
             // targeting .todo-elem
             evt.target.parentNode.parentNode.parentNode.classList.remove("strike-through");
+            (0,_removeTasks_showDelete_js__WEBPACK_IMPORTED_MODULE_3__.hideDelete)();
         }
     }
 }
@@ -2155,6 +2232,136 @@ function showNames() {
     return divEl;
 }
  */
+
+/***/ }),
+
+/***/ "./js/properAttemptForAssignment/removeTasks/deleteTask.js":
+/*!*****************************************************************!*\
+  !*** ./js/properAttemptForAssignment/removeTasks/deleteTask.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "deletingTask": () => (/* binding */ deletingTask)
+/* harmony export */ });
+/* harmony import */ var _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../showTasks/displayTodos.js */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
+/* harmony import */ var _groupTasks_byName_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../groupTasks/byName.js */ "./js/properAttemptForAssignment/groupTasks/byName.js");
+
+
+
+function deletingTask(evt) {
+    let todoElem = evt.target.parentNode.id;
+    // console.log(todoElem);
+    let getID = todoElem.split("-")[2];
+    // console.log(getID);
+    _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.todos.forEach(item => {
+        if(item.id === Number(getID)) {
+            removeItem(Number(getID), item.projectName);
+            (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayAllTodoTasks)();
+        }
+    });
+}
+
+function removeItem(id, projectName) {
+    for(let i=0; i<_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.todos.length; i++) {
+        if(_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.todos[i].id === id) {
+            _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.todos.splice(i,1);
+            (0,_groupTasks_byName_js__WEBPACK_IMPORTED_MODULE_1__.afterDeleteFromProjects)(id, projectName);
+        }
+    }
+}
+
+// function afterDeleteFromProjects(id) {
+//     console.log("b:",filteredTasks);
+//     // filteredTasks = filteredTasks.filter(item => item.id !== id);
+//     let revisedFiltered = filteredTasks.filter(item => item.id !== id);
+//     console.log("a:",filteredTasks, revisedFiltered);
+//     // displayingFiltered(filteredTasks);
+//     displayingFiltered(revisedFiltered);
+// }
+
+
+
+/**
+ *
+ * 
+ function deletingTask(evt) {
+    let todoElem = evt.target.parentNode.parentNode.parentNode.querySelector(".todo-elem");
+    let getID = todoElem.id.split("-")[2];
+    console.log(getID);
+    todos.forEach(item => {
+        // console.log(item.id === getID, item.id, getID);
+        if(item.id === Number(getID)) {
+            console.log(item.id === getID);
+            // removeItem(item.id);
+            removeItem(Number(getID));
+            displayAllTodoTasks();
+        }
+    });
+}
+
+function removeItem(id) {
+    for(let i=0; i<todos.length; i++) {
+        if(todos[i].id === id) {
+            console.log(todos[i].id, id);
+            // todos.splice(i,1);
+        }
+    }
+}
+ */
+
+/***/ }),
+
+/***/ "./js/properAttemptForAssignment/removeTasks/showDelete.js":
+/*!*****************************************************************!*\
+  !*** ./js/properAttemptForAssignment/removeTasks/showDelete.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "showDelete": () => (/* binding */ showDelete),
+/* harmony export */   "hideDelete": () => (/* binding */ hideDelete)
+/* harmony export */ });
+/* harmony import */ var _removeTasks_deleteTask_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../removeTasks/deleteTask.js */ "./js/properAttemptForAssignment/removeTasks/deleteTask.js");
+// let deleteDiv = document.querySelector(".delete-div");
+
+let deleteDiv, delIcon, delTask;
+
+function showDelete(evt) {
+    deleteDiv = evt.target.parentNode.parentNode.parentNode.querySelector(".delete-div");
+    if (deleteDiv.style.display !== "block") {
+        deleteDiv.style.display = "block";
+        deleteDiv.classList.remove("strike-through");
+    }
+    // if(evt.target.id.startsWith("del-")) {
+    //     evt.target.addEventListener("click", removeX);
+    // }
+    delIcon = deleteDiv.querySelector("#del-icon");
+    delIcon.addEventListener("click", removeX);
+
+    deleteDiv.addEventListener("click", _removeTasks_deleteTask_js__WEBPACK_IMPORTED_MODULE_0__.deletingTask);
+}
+
+// if(deleteDiv) deleteDiv.addEventListener("click", deletingTask);
+
+function removeX(evt) {
+    if(evt.target.style.display !== "none") {
+        console.log("here::");
+        // evt.target.style.display = "none";
+        evt.target.parentNode.style.display = "none";
+    }
+    else evt.target.style.display = "block";
+}
+
+function hideDelete() {
+    if(deleteDiv.style.display !== "none") {
+        deleteDiv.style.display = "none";
+    }
+}
+
+
 
 /***/ }),
 
