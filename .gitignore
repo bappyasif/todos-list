@@ -3,4 +3,4 @@ node_modules/
 # /dist/main.js.map
 # /dist/
 package-lock.json
-icons/
+# icons/
