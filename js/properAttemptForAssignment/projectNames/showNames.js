@@ -8,14 +8,16 @@ function showNames() {
         // liDiv.id = "li-div-"+i;
         liDiv.classList.add("li-div");
         let firstIcon = document.createElement("img");
-        firstIcon.src = "/icons/menu-01.svg";
+        firstIcon.src = "./icons/menu-01.svg";
+        // firstIcon.src = "dist/icons/menu-01.svg";
         firstIcon.classList.add("first-icon", "icons");
         let nameDiv = document.createElement("div");
         nameDiv.textContent = existingProjects[i];
         nameDiv.id = "li-div-"+i;
         nameDiv.classList.add("li-text");
         let secondIcon = document.createElement("img");
-        secondIcon.src = "/icons/menu-01.svg";
+        secondIcon.src = "./icons/menu-01.svg";
+        // secondIcon.src = "dist/icons/menu-01.svg";
         secondIcon.classList.add("ending-icon", "icons");
         liDiv.append(firstIcon,nameDiv,secondIcon);
         liDiv.addEventListener("click", handleGroupedProjectsTask);
