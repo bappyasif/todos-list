@@ -15,7 +15,8 @@ let createTask = (title, createdDate, dueDate, priorityLevel, taskNote) => {
     obj.id = increaseCount();
     obj.prjDD = existingProjects;
     obj.getDOM = `<div class="tasks-container">
-    <div class="todo-elem" id="todo-elem-"${obj.id}>
+    <div class="todo-elem" id="todo-elem-${obj.id}">
+        <div class="delete-div" style="display:none;">Delete Task <span id="del-icon">X</span></div>
         <div class="task-info">
         <div class="checklist-div">
             <input type="checkbox" id="task-check-${obj.id}">

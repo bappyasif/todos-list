@@ -378,3 +378,30 @@ select:focus, select:hover {outline: none; box-shadow: 0 0 1.1px transparent;}
     position: absolute;
     display: none;
 }
+/* todo-elem for Delete Div */
+.delete-div {
+    /* text-align: center;
+    width: max-content;
+    margin: auto; */
+    /* display: "none"; */
+    border: 1.1px solid yellowgreen;
+    position: absolute;
+    margin-left: 33%;
+    margin-top: 4%;
+    width: 20%;
+    text-align: center;
+    opacity: 100%;
+}
+.delete-div:hover {
+    color: snow;
+    background-color: silver;
+}
+#del-icon {
+    font-size: medium;
+    border: 1.1px solid silver;
+    margin-left: 11%;
+}
+#del-icon:hover {
+    background-color: yellowgreen;
+    transform: scale(2.9);
+}

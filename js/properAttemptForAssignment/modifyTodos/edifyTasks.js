@@ -4,6 +4,7 @@ import { todos, displayAllTodoTasks } from "../showTasks/displayTodos.js";
 import { coloringPrioritiesFromDD } from "../priorityColors/colorCoating.js";
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
 import { groupTodosByProjects, groupifyTasks } from "../groupTasks/byName.js";
+import { showDelete, hideDelete} from "../removeTasks/showDelete.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => handleModification(evt));
@@ -102,10 +103,13 @@ function handleHighlightingCheckboxDiv(evt) {
             evt.target.parentNode.classList.add("highlight-check");
             // targeting .todo-elem
             evt.target.parentNode.parentNode.parentNode.classList.add("strike-through");
+            // showing Delete After Strikethrough
+            showDelete(evt);
         } else {
             evt.target.parentNode.classList.remove("highlight-check");
             // targeting .todo-elem
             evt.target.parentNode.parentNode.parentNode.classList.remove("strike-through");
+            hideDelete();
         }
     }
 }

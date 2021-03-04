@@ -1,7 +1,7 @@
 import { showNames } from "../properAttemptForAssignment/projectNames/showNames.js";
 import { showGroupifiedProjectTodos } from "../properAttemptForAssignment/groupTasks/byName.js";
 import { displayingFiltered, displayAllTodoTasks, todos } from "../properAttemptForAssignment/showTasks/displayTodos.js";
-import { handleDateWiseGrouping } from "../properAttemptForAssignment/groupTasks/byDates.js";
+import { handleDateWiseGrouping, slipinDateAndText } from "../properAttemptForAssignment/groupTasks/byDates.js";
 import { findTasksByName } from "../properAttemptForAssignment/searchTasks/byName.js";
 let projectsDiv = document.querySelector(".projects");
 
@@ -40,10 +40,13 @@ function handleGroupedProjectsTask(evt) {
     let filteredTasks = showGroupifiedProjectTodos(divText);
     // console.log("length:", filteredTasks.length);
     if (todos.length !== 0 && filteredTasks.length !== 0) {
+        // Tasks Panel Header Captioning
+        slipinDateAndText("", divText);
+        // displaying tasks after filtering by Project Names from List
         displayingFiltered(filteredTasks);
     } else {
         alert("no tasks added yet....");
-        displayAllTodoTasks()
+        displayAllTodoTasks();
     }
 }
 
