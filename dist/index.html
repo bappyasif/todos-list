@@ -171,6 +171,30 @@
             </div>
         </div>
     </div>
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+  <script>
+      const firebaseConfig = {
+    apiKey: "AIzaSyC7pRxD7iUpgQJ3jQvrHzU8cudJ65LbTP8",
+    authDomain: "todoapp-7412f.firebaseapp.com",
+    projectId: "todoapp-7412f",
+    storageBucket: "todoapp-7412f.appspot.com",
+    messagingSenderId: "839524545719",
+    appId: "1:839524545719:web:dacd8a6460d2f6ffb98932",
+    measurementId: "G-2RQRGGJMB8"
+};
+
+firebase.initializeApp(firebaseConfig);
+  </script>
     <script src="main.js"></script>
 </body>
 

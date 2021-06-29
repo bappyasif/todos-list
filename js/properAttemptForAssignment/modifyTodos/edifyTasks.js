@@ -5,6 +5,7 @@ import { coloringPrioritiesFromDD } from "../priorityColors/colorCoating.js";
 // import {groupTodosByProjects, groupify} from "../groupTasks/byName.js";
 import { groupTodosByProjects, groupifyTasks } from "../groupTasks/byName.js";
 import { showDelete, hideDelete} from "../removeTasks/showDelete.js";
+import { updateTaskInFirestore } from "../addTasks/saveTaskToFirebase.js";
 function editTodos() {
     let tasksContainer = document.querySelector(".tasks-container");
     tasksContainer.addEventListener("click", evt => handleModification(evt));
@@ -51,6 +52,9 @@ function showDatepicker(evt) {
             evt.target.parentNode.querySelector(".time-stamp").textContent = dateValue + ":" + format(parseISO(datePicker.value), "'Due_at:'eeee");
             datePicker.style.display = "none";
             datePicker.removeEventListener("click", showDatepicker);
+
+            let taskTitle =  evt.target.parentNode.parentNode.querySelector('.task-text').textContent;
+            updateTaskInFirestore(taskTitle, {dueDate: dateValue});
         });
     } else {
         datePicker.style.display = "none";
@@ -78,6 +82,9 @@ function handleProjectTodoTask(evt) {
         // console.log("pN:", item.projectName);
         groupTodosByProjects();
     });
+
+    let taskTitle =  evt.target.parentNode.parentNode.parentNode.querySelector('.task-text').textContent;
+    updateTaskInFirestore(taskTitle, {project: evt.target.value});
 }
 
 function handleColorCoatingPriority(evt) {
@@ -93,6 +100,10 @@ function handleColorCoatingPriority(evt) {
     });
     // coloringPrioritiesFromDD(ddValue);
     coloringPrioritiesFromDD(ddValue, divID);
+
+    // console.log(evt.target.parentNode.parentNode.parentNode, "<<>>")
+    let taskTitle =  evt.target.parentNode.parentNode.parentNode.querySelector('.task-text').textContent;
+    updateTaskInFirestore(taskTitle, {priority: ddValue});
 }
 
 function handleHighlightingCheckboxDiv(evt) {

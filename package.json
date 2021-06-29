@@ -20,5 +20,8 @@
     "date-fns": "^2.17.0",
     "webpack": "^5.21.2",
     "webpack-cli": "^4.5.0"
+  },
+  "devDependencies": {
+    "firebase": "^8.6.8"
   }
 }

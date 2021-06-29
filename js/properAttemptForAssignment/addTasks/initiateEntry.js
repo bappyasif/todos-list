@@ -2,6 +2,8 @@ import { startOfToday, format, endOfDay } from "date-fns";
 import { showPriorities, showSelectDDElem, getPrioritySelectedValue } from "./prioritiyLevels.js";
 import { createTask } from "./createTaskUsingFactory.js";
 import { displayTasks, todos, displayAllTodoTasks } from "../showTasks/displayTodos.js";
+import { addTasksInFirestore } from "./saveTaskToFirebase.js";
+
 // import {showProjectNamesDD, justDropdowns} from "../projectNames/showDropdowns.js";
 let taskDate, taskDue, taskPriority, taskNote, taskTitle;
 taskDate = document.querySelector(".dump-calVal");
@@ -44,6 +46,10 @@ function addingTodo(evt) {
     taskTitle = getUserTaskEntry();
     // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
     let todoElem = createTask(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+    
+    let data = {title:todoElem.title, createdDate: todoElem.createdDate, dueDate: todoElem.dueDate, priority: todoElem.priorityLevel, note: todoElem.taskNote}
+    addTasksInFirestore(data);
+
     todos.push(todoElem);
     displayTasks(todoElem.domElem);
     // showProjectNamesDD();
