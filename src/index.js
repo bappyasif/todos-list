@@ -21,6 +21,7 @@ import {addingNewProjectName} from "../js/properAttemptForAssignment/projectName
 import {readyTodoTaskEntry} from "../js/properAttemptForAssignment/addTasks/initiateEntry.js";
 // import {displayAllTodoTasks, todos} from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
 import {editTodos} from "../js/properAttemptForAssignment/modifyTodos/edifyTasks.js";
+import { displayAllTasksFromFirestoreDatabase, displayAllTodoTasks } from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
 // import { deleteDocument, localChanges, readData, simpleQueries, testFirestore, updateDocument } from "../js/properAttemptForAssignment/addTasks/saveTaskToFirebase.js";
 // import {showProjectNamesDD} from "../js/properAttemptForAssignment/projectNames/showDropdowns.js";
 displayingProjects();
@@ -30,6 +31,7 @@ readyTodoTaskEntry();
 editTodos();
 // showProjectNamesDD();
 readyGroupingsWiseDisplays();
+displayAllTasksFromFirestoreDatabase();
 
 // testFirestore();
 // readData();

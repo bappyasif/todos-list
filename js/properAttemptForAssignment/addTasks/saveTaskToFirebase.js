@@ -1,3 +1,6 @@
+import { displayTasks, todos } from "../showTasks/displayTodos";
+import { createTask } from "./createTaskUsingFactory";
+
 let db = firebase.firestore();
 export let addTasksInFirestore = taskObj => {
     let {title,createdDate,dueDate,priority, note} = taskObj;
@@ -10,7 +13,13 @@ export let updateTaskInFirestore = (docName, prop) => {
     db.collection('allTodos').doc(docName).update(prop).then(()=>console.log("updated!!")).catch(err=>console.log('error!!', err));
 }
 
-
+export let convertFirestoreDataIntoDomElements = (todoObj, docName) => {
+    let {title,createdDate,dueDate,priority, note} = todoObj;
+    let makeObject = createTask(title=docName, createdDate, dueDate, priority, note);
+    
+    todos.push(makeObject);
+    displayTasks(makeObject.domElem);
+}
 
 
 
@@ -39,6 +48,33 @@ export let updateTaskInFirestore = (docName, prop) => {
 
 
 /**
+ * 
+ * 
+ // let includeTasksProjectNamesIfAny = (taskDomNodeID, projectName) => {
+//     // let taskNode = document.querySelector(`"#${taskDomNodeID}"`);
+//     let taskNode = document.getElementById(taskDomNodeID);
+//     // console.log(taskNode);
+//     // let id = taskDomNodeID.split('-')[2];
+//     // let findProjectDropdownDiv = taskNode.querySelector('.choose-project');
+//     // if(findProjectDropdownDiv.id)
+//     // console.log(findProjectDropdownDiv, "<><>");
+
+//     let findProjectDropdownDiv = taskNode.querySelector('.choose-project');
+//     // findProjectDropdownDiv.value = projectName;
+//     if(findProjectDropdownDiv.id.includes(taskDomNodeID.split('-')[2])) findProjectDropdownDiv.value = projectName;
+//     console.log(projectName, findProjectDropdownDiv.id);
+// }
+
+// export let includeTasksProjectNamesIntoDOM = (docName, projectName, distinguishableID) => {
+//     let projectDiv = document.querySelector('.choose-project');
+//     projectDiv.value = projectName;
+
+//     let taskIdentifier = document.querySelector('.task-text').textContent;
+//     if(taskIdentifier == docName) {
+//         // console.log(docName, taskIdentifier, "here!!!!", distinguishableID)
+//         projectDiv.value = projectName;
+//     }
+// }
  *
  *  
 // firebase app is always a required import

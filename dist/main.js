@@ -220,6 +220,7 @@ function addingTodo(evt) {
     taskTitle = getUserTaskEntry();
     // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
     let todoElem = (0,_createTaskUsingFactory_js__WEBPACK_IMPORTED_MODULE_1__.createTask)(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+    // console.log(typeof todoElem.domElem, "!!");
     
     let data = {title:todoElem.title, createdDate: todoElem.createdDate, dueDate: todoElem.dueDate, priority: todoElem.priorityLevel, note: todoElem.taskNote}
     ;(0,_saveTaskToFirebase_js__WEBPACK_IMPORTED_MODULE_3__.addTasksInFirestore)(data);
@@ -643,8 +644,14 @@ function getPrioritySelectedValue() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "addTasksInFirestore": () => (/* binding */ addTasksInFirestore),
-/* harmony export */   "updateTaskInFirestore": () => (/* binding */ updateTaskInFirestore)
+/* harmony export */   "updateTaskInFirestore": () => (/* binding */ updateTaskInFirestore),
+/* harmony export */   "convertFirestoreDataIntoDomElements": () => (/* binding */ convertFirestoreDataIntoDomElements)
 /* harmony export */ });
+/* harmony import */ var _showTasks_displayTodos__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../showTasks/displayTodos */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
+/* harmony import */ var _createTaskUsingFactory__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createTaskUsingFactory */ "./js/properAttemptForAssignment/addTasks/createTaskUsingFactory.js");
+
+
+
 let db = firebase.firestore();
 let addTasksInFirestore = taskObj => {
     let {title,createdDate,dueDate,priority, note} = taskObj;
@@ -657,7 +664,13 @@ let updateTaskInFirestore = (docName, prop) => {
     db.collection('allTodos').doc(docName).update(prop).then(()=>console.log("updated!!")).catch(err=>console.log('error!!', err));
 }
 
-
+let convertFirestoreDataIntoDomElements = (todoObj, docName) => {
+    let {title,createdDate,dueDate,priority, note} = todoObj;
+    let makeObject = (0,_createTaskUsingFactory__WEBPACK_IMPORTED_MODULE_1__.createTask)(title=docName, createdDate, dueDate, priority, note);
+    
+    _showTasks_displayTodos__WEBPACK_IMPORTED_MODULE_0__.todos.push(makeObject);
+    (0,_showTasks_displayTodos__WEBPACK_IMPORTED_MODULE_0__.displayTasks)(makeObject.domElem);
+}
 
 
 
@@ -686,6 +699,33 @@ let updateTaskInFirestore = (docName, prop) => {
 
 
 /**
+ * 
+ * 
+ // let includeTasksProjectNamesIfAny = (taskDomNodeID, projectName) => {
+//     // let taskNode = document.querySelector(`"#${taskDomNodeID}"`);
+//     let taskNode = document.getElementById(taskDomNodeID);
+//     // console.log(taskNode);
+//     // let id = taskDomNodeID.split('-')[2];
+//     // let findProjectDropdownDiv = taskNode.querySelector('.choose-project');
+//     // if(findProjectDropdownDiv.id)
+//     // console.log(findProjectDropdownDiv, "<><>");
+
+//     let findProjectDropdownDiv = taskNode.querySelector('.choose-project');
+//     // findProjectDropdownDiv.value = projectName;
+//     if(findProjectDropdownDiv.id.includes(taskDomNodeID.split('-')[2])) findProjectDropdownDiv.value = projectName;
+//     console.log(projectName, findProjectDropdownDiv.id);
+// }
+
+// export let includeTasksProjectNamesIntoDOM = (docName, projectName, distinguishableID) => {
+//     let projectDiv = document.querySelector('.choose-project');
+//     projectDiv.value = projectName;
+
+//     let taskIdentifier = document.querySelector('.task-text').textContent;
+//     if(taskIdentifier == docName) {
+//         // console.log(docName, taskIdentifier, "here!!!!", distinguishableID)
+//         projectDiv.value = projectName;
+//     }
+// }
  *
  *  
 // firebase app is always a required import
@@ -2440,10 +2480,18 @@ function deletingTask(evt) {
     // console.log(todoElem);
     let getID = todoElem.split("-")[2];
     // console.log(getID);
+    
+    // let taskTitle =  evt.target.parentNode.querySelector('.task-text').textContent;
+    // console.log(taskTitle, "!!",  evt.target.parentNode)
+
     _showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.todos.forEach(item => {
         if(item.id === Number(getID)) {
             removeItem(Number(getID), item.projectName);
             (0,_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_0__.displayAllTodoTasks)();
+
+            let taskTitle =  evt.target.parentNode.querySelector('.task-text').textContent;
+            firebase.firestore().collection('allTodos').doc(taskTitle).delete().then(()=>console.log('deleted!!')).catch(err=>console.log('error!!', err));
+            // console.log("!!",  evt.target.parentNode.querySelector('.task-text').textContent)
         }
     });
 }
@@ -2728,13 +2776,16 @@ function removingDuplicates(tasks, evt) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "displayAllTasksFromFirestoreDatabase": () => (/* binding */ displayAllTasksFromFirestoreDatabase),
 /* harmony export */   "displayTasks": () => (/* binding */ displayTasks),
 /* harmony export */   "todos": () => (/* binding */ todos),
 /* harmony export */   "displayAllTodoTasks": () => (/* binding */ displayAllTodoTasks),
 /* harmony export */   "displayingFiltered": () => (/* binding */ displayingFiltered)
 /* harmony export */ });
-/* harmony import */ var _priorityColors_colorCoating_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../priorityColors/colorCoating.js */ "./js/properAttemptForAssignment/priorityColors/colorCoating.js");
-/* harmony import */ var _projectNames_showDropdowns_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../projectNames/showDropdowns.js */ "./js/properAttemptForAssignment/projectNames/showDropdowns.js");
+/* harmony import */ var _addTasks_saveTaskToFirebase_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../addTasks/saveTaskToFirebase.js */ "./js/properAttemptForAssignment/addTasks/saveTaskToFirebase.js");
+/* harmony import */ var _priorityColors_colorCoating_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../priorityColors/colorCoating.js */ "./js/properAttemptForAssignment/priorityColors/colorCoating.js");
+/* harmony import */ var _projectNames_showDropdowns_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../projectNames/showDropdowns.js */ "./js/properAttemptForAssignment/projectNames/showDropdowns.js");
+
 
 
 
@@ -2746,11 +2797,37 @@ function displayTasks(htmlFragment) {
     displayAllTodoTasks();
     // this way of calling colorCoating causes dom to render after a new option is being selected
     // rather implemented this from colorCoating and edifyTasks instead, tageting each nodes for color coating
-    (0,_priorityColors_colorCoating_js__WEBPACK_IMPORTED_MODULE_0__.priorityLevelsColorCoating)();
+    (0,_priorityColors_colorCoating_js__WEBPACK_IMPORTED_MODULE_1__.priorityLevelsColorCoating)();
     // showProjectNamesDD();
+    // displayAllTasksFromFirestoreDatabase();
+}
+
+let displayAllTasksFromFirestoreDatabase = () => {
+    // read data from firestore
+    firebase.firestore().collection('allTodos').get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            // console.log(doc.data(), 'data!!')
+            // console.log("data read!!", doc.name, doc.id)
+            (0,_addTasks_saveTaskToFirebase_js__WEBPACK_IMPORTED_MODULE_0__.convertFirestoreDataIntoDomElements)(doc.data(), doc.id);
+            displayAllTodoTasks();
+            displayProjectNameIfItExists(doc.id, doc.data().project);
+            // priorityLevelsColorCoating();
+        })
+    }).catch(err =>  console.log('error!!', err));
+}
+
+let displayProjectNameIfItExists = (TaskName, projectName) => {
+    let allNodes = document.querySelectorAll('.choose-project');
+    Array.from(allNodes).forEach(node => {
+        console.log(node, "<<>>", node.parentNode.parentNode.parentNode);
+        let taskTitle = node.parentNode.parentNode.parentNode.querySelector('.task-text').textContent;
+        if(taskTitle == TaskName) node.value = projectName;
+    })
 }
 
 function displayAllTodoTasks() {
+    // displayAllTasksFromFirestoreDatabase();
+
     removeAllChildNodes(tasksContainer);
     console.log(todos.length, todos[todos.length - 1]);
     todos.forEach(item => {
@@ -2759,7 +2836,7 @@ function displayAllTodoTasks() {
         // it needed to have its previously curated task's project dropdowns to be cleaned so that it doesn't get accumulated
         // also found a workaround it using factory function domString for each task and using options within select tag from there using map()
         item.domElem.querySelector(".choose-project").innerHTML = "";
-        (0,_projectNames_showDropdowns_js__WEBPACK_IMPORTED_MODULE_1__.justDropdowns)(item.domElem.querySelector(".choose-project"));
+        (0,_projectNames_showDropdowns_js__WEBPACK_IMPORTED_MODULE_2__.justDropdowns)(item.domElem.querySelector(".choose-project"));
         // priorityLevelsColorCoating();
         
         // updating dropdowns selected value
@@ -6534,6 +6611,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_properAttemptForAssignment_projectNames_addProject_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/properAttemptForAssignment/projectNames/addProject.js */ "./js/properAttemptForAssignment/projectNames/addProject.js");
 /* harmony import */ var _js_properAttemptForAssignment_addTasks_initiateEntry_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../js/properAttemptForAssignment/addTasks/initiateEntry.js */ "./js/properAttemptForAssignment/addTasks/initiateEntry.js");
 /* harmony import */ var _js_properAttemptForAssignment_modifyTodos_edifyTasks_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../js/properAttemptForAssignment/modifyTodos/edifyTasks.js */ "./js/properAttemptForAssignment/modifyTodos/edifyTasks.js");
+/* harmony import */ var _js_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../js/properAttemptForAssignment/showTasks/displayTodos.js */ "./js/properAttemptForAssignment/showTasks/displayTodos.js");
 // import {showInputter, collectInputs, readyInput} from "../js/modularized/userInput/getInput.js";
 // import {showInputter, readyInput} from "../js/modularized/userInput/getInput.js";
 // import {editDelete} from "../js/modularized/editingItems/todoListEditing.js";
@@ -6557,6 +6635,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // import {displayAllTodoTasks, todos} from "../js/properAttemptForAssignment/showTasks/displayTodos.js";
 
+
 // import { deleteDocument, localChanges, readData, simpleQueries, testFirestore, updateDocument } from "../js/properAttemptForAssignment/addTasks/saveTaskToFirebase.js";
 // import {showProjectNamesDD} from "../js/properAttemptForAssignment/projectNames/showDropdowns.js";
 (0,_js_properAttemptForAssignment_init_js__WEBPACK_IMPORTED_MODULE_0__.displayingProjects)();
@@ -6566,6 +6645,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_js_properAttemptForAssignment_modifyTodos_edifyTasks_js__WEBPACK_IMPORTED_MODULE_3__.editTodos)();
 // showProjectNamesDD();
 (0,_js_properAttemptForAssignment_init_js__WEBPACK_IMPORTED_MODULE_0__.readyGroupingsWiseDisplays)();
+(0,_js_properAttemptForAssignment_showTasks_displayTodos_js__WEBPACK_IMPORTED_MODULE_4__.displayAllTasksFromFirestoreDatabase)();
 
 // testFirestore();
 // readData();

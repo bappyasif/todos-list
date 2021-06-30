@@ -1,3 +1,4 @@
+import { convertFirestoreDataIntoDomElements, includeTasksProjectNamesIntoDOM } from "../addTasks/saveTaskToFirebase.js";
 import { priorityLevelsColorCoating } from "../priorityColors/colorCoating.js";
 import { showProjectNamesDD, justDropdowns } from "../projectNames/showDropdowns.js";
 import {justDropdownsWithSelected} from "../projectNames/showDropdowns.js";
@@ -11,9 +12,35 @@ function displayTasks(htmlFragment) {
     // rather implemented this from colorCoating and edifyTasks instead, tageting each nodes for color coating
     priorityLevelsColorCoating();
     // showProjectNamesDD();
+    // displayAllTasksFromFirestoreDatabase();
+}
+
+export let displayAllTasksFromFirestoreDatabase = () => {
+    // read data from firestore
+    firebase.firestore().collection('allTodos').get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            // console.log(doc.data(), 'data!!')
+            // console.log("data read!!", doc.name, doc.id)
+            convertFirestoreDataIntoDomElements(doc.data(), doc.id);
+            displayAllTodoTasks();
+            displayProjectNameIfItExists(doc.id, doc.data().project);
+            // priorityLevelsColorCoating();
+        })
+    }).catch(err =>  console.log('error!!', err));
+}
+
+let displayProjectNameIfItExists = (TaskName, projectName) => {
+    let allNodes = document.querySelectorAll('.choose-project');
+    Array.from(allNodes).forEach(node => {
+        console.log(node, "<<>>", node.parentNode.parentNode.parentNode);
+        let taskTitle = node.parentNode.parentNode.parentNode.querySelector('.task-text').textContent;
+        if(taskTitle == TaskName) node.value = projectName;
+    })
 }
 
 function displayAllTodoTasks() {
+    // displayAllTasksFromFirestoreDatabase();
+
     removeAllChildNodes(tasksContainer);
     console.log(todos.length, todos[todos.length - 1]);
     todos.forEach(item => {

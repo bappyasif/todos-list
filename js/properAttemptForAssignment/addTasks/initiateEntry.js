@@ -46,6 +46,7 @@ function addingTodo(evt) {
     taskTitle = getUserTaskEntry();
     // console.log(taskDate, taskDue, taskPriority, taskNote, taskTitle);
     let todoElem = createTask(taskTitle, taskDate.textContent, taskDue.textContent, taskPriority, taskNote);
+    // console.log(typeof todoElem.domElem, "!!");
     
     let data = {title:todoElem.title, createdDate: todoElem.createdDate, dueDate: todoElem.dueDate, priority: todoElem.priorityLevel, note: todoElem.taskNote}
     addTasksInFirestore(data);

@@ -6,10 +6,18 @@ function deletingTask(evt) {
     // console.log(todoElem);
     let getID = todoElem.split("-")[2];
     // console.log(getID);
+    
+    // let taskTitle =  evt.target.parentNode.querySelector('.task-text').textContent;
+    // console.log(taskTitle, "!!",  evt.target.parentNode)
+
     todos.forEach(item => {
         if(item.id === Number(getID)) {
             removeItem(Number(getID), item.projectName);
             displayAllTodoTasks();
+
+            let taskTitle =  evt.target.parentNode.querySelector('.task-text').textContent;
+            firebase.firestore().collection('allTodos').doc(taskTitle).delete().then(()=>console.log('deleted!!')).catch(err=>console.log('error!!', err));
+            // console.log("!!",  evt.target.parentNode.querySelector('.task-text').textContent)
         }
     });
 }
